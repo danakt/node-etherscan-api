@@ -8,12 +8,15 @@
     "test:watch": "jest --watchAll --coverage"
   },
   "jest": {
-    "testMatch": ["<rootDir>/tests/**/*.js"]
+    "testMatch": [
+      "<rootDir>/tests/**/*.js"
+    ]
   },
   "author": "Danakt Frost",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^22.1.4",
+    "@types/request-promise": "^4.1.41",
     "eslint": "^4.18.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0",
@@ -32,6 +35,7 @@
   "dependencies": {
     "@types/node": "^9.4.6",
     "jest": "^22.4.2",
+    "request-promise": "^4.2.2",
     "typescript-eslint-parser": "^14.0.0"
   }
 }
