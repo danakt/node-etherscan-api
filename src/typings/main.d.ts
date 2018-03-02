@@ -23,3 +23,23 @@ declare type TTransaction = {
   txreceipt_status: string
   value: string
 }
+
+/**
+ * Internal transaction info
+ */
+declare type TInternalTransaction = {
+  blockNumber: string
+  timeStamp: string
+  hash: string
+  from: string
+  to: string
+  value: string
+  contractAddress: string
+  input: string
+  type: string
+  gas: string
+  gasUsed: string
+  traceId: string
+  isError: string
+  errCode: string
+}
