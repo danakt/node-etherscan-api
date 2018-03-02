@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function serializeObject(obj) {
     return Object.keys(obj)
-        .map(function (key) { return (obj[key] == null ? key : key + "=" + encodeURIComponent(obj[key])); })
+        .map(key => (obj[key] == null ? key : `${key}=${encodeURIComponent(obj[key])}`))
         .join('&');
 }
 exports.serializeObject = serializeObject;
