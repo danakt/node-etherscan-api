@@ -23,4 +23,8 @@ describe('Ether units coverter', () => {
     // XXX: precision loss
     expect(etherConvert('1', 'wei', 'tether')).toBe('0')
   })
+
+  test('Should work for same unit', () => {
+    expect(etherConvert('1', 'wei', 'wei')).toBe('1')
+  })
 })
