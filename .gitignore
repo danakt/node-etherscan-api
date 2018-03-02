@@ -2,6 +2,7 @@
 node_modules/
 .vscode/
 coverage/
+build/ # temporary
 
 # files
 package-lock.json
