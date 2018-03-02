@@ -105,7 +105,7 @@ export = class EtherscanApi {
     offset?: number,
     page?: number,
     sort?: 'asc' | 'desc'
-  ) {
+  ): Promise<TTransaction[]> {
     return createRequest(this.host, {
       apikey:     this.token,
       action:     MODULES.ACCOUNT,
