@@ -10,12 +10,14 @@ type TRequiredParams = {
 }
 
 type TSelectiveParams
+  // Request balance
   = | {
       module: typeof MODULES.ACCOUNT
       action: typeof ACTIONS.BALANCE | typeof ACTIONS.BALANCE_MULTI
       address: string
       tag?: string
     }
+  // Request transactions list
   | {
       module: typeof MODULES.ACCOUNT
       action: typeof ACTIONS.TRANSACTIONS_LIST
