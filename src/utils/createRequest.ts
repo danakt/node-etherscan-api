@@ -1,11 +1,12 @@
 import * as request        from 'request-promise'
 import { serializeObject } from './serializeObject'
 import { MODULES }         from '../constants/modules'
+import { ACTIONS }         from '../constants/actions'
 
 /** Request parameters */
 export type TParams = {
   module: ValueOf<typeof MODULES>
-  action: string
+  action: ValueOf<typeof ACTIONS>
   apikey: string
   tag?: string
   address?: string
