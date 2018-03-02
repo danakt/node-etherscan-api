@@ -47,8 +47,8 @@ export = class EtherscanApi {
   ): Promise<string> {
     const resp = await createRequest(this.host, {
       apikey: this.token,
-      action: ACTIONS.BALANCE,
       module: MODULES.ACCOUNT,
+      action: ACTIONS.BALANCE,
       tag:    'latest',
       address
     })
@@ -61,8 +61,10 @@ export = class EtherscanApi {
 
   /**
    * Get Ether Balance for multiple Addresses in a single call
+   * @description Up to a maximum of 20 accounts in a single batch
    * @param {Array<string>} addresses
    * @param {string?} [unit="wei"] Balance unit
+   *
    */
   public async getAccountBalances(
     addresses: string[],
@@ -72,8 +74,8 @@ export = class EtherscanApi {
       this.host,
       {
         apikey:  this.token,
-        action:  MODULES.ACCOUNT,
-        module:  ACTIONS.BALANCE_MULTI,
+        module:  MODULES.ACCOUNT,
+        action:  ACTIONS.BALANCE_MULTI,
         tag:     'latest',
         address: addresses.join(',')
       }
@@ -88,5 +90,32 @@ export = class EtherscanApi {
           balance: etherConvert(item.balance, 'wei', unit)
         }
       })
+  }
+
+  /**
+   * Get a list of 'Normal' Transactions By Address
+   * @param address
+   * @param startBlock Starting block number to retrieve results
+   * @param endBlock Ending block number to retrieve results
+   */
+  public async getTransactions(
+    address: string,
+    startBlock?: number,
+    endBlock?: number,
+    offset?: number,
+    page?: number,
+    sort?: 'asc' | 'desc'
+  ) {
+    return createRequest(this.host, {
+      apikey:     this.token,
+      action:     MODULES.ACCOUNT,
+      module:     ACTIONS.TRANSACTIONS_LIST,
+      address,
+      endblock:   endBlock,
+      startblock: startBlock,
+      offset,
+      page,
+      sort
+    })
   }
 }
