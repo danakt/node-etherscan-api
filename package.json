@@ -1,0 +1,37 @@
+{
+  "name": "node-etherscan-api",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watchAll --coverage"
+  },
+  "jest": {
+    "testMatch": ["<rootDir>/tests/**/*.js"]
+  },
+  "author": "Danakt Frost",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^22.1.4",
+    "eslint": "^4.18.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-arca": "^0.6.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-typescript": "^0.8.1",
+    "ts-node": "^5.0.0",
+    "typescript": "^2.7.2",
+    "typescript-eslint-parser": "^14.0.0"
+  },
+  "dependencies": {
+    "@types/node": "^9.4.6",
+    "jest": "^22.4.2",
+    "typescript-eslint-parser": "^14.0.0"
+  }
+}
