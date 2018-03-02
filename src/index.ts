@@ -2,6 +2,9 @@ import { NETWORKS }      from './constants/networks'
 import { createRequest } from './utils/createRequest'
 import { MODULES }       from './constants/modules'
 import { ACTIONS }       from './constants/actions'
+import { etherConvert }  from './utils/etherConvert'
+// eslint-disable-next-line no-unused-vars
+import { UNITS }         from './constants/units'
 
 /**
  * Etherscan API
@@ -40,7 +43,7 @@ export = class EtherscanApi {
    */
   public async getAccountBalance(
     address: string,
-    unit: string = 'wei'
+    unit: keyof typeof UNITS = 'wei'
   ): Promise<string> {
     const resp = await createRequest(this.host, {
       apikey: this.token,
@@ -50,7 +53,10 @@ export = class EtherscanApi {
       address
     })
 
-    return resp
+    // Converting balance to another unit
+    return unit === 'wei' || !(unit in UNITS)
+      ? resp
+      : etherConvert(resp, 'wei', unit)
   }
 
   /**
@@ -60,9 +66,9 @@ export = class EtherscanApi {
    */
   public async getAccountBalances(
     addresses: string[],
-    unit: string = 'wei'
-  ): Promise<{ account: string; balance: string }> {
-    const resp: { account: string; balance: string } = await createRequest(
+    unit: keyof typeof UNITS = 'wei'
+  ): Promise<{ account: string; balance: string }[]> {
+    const resp: { account: string; balance: string }[] = await createRequest(
       this.host,
       {
         apikey:  this.token,
@@ -73,6 +79,14 @@ export = class EtherscanApi {
       }
     )
 
-    return resp
+    // Converting balances to another unit
+    return unit === 'wei' || !(unit in UNITS)
+      ? resp
+      : resp.map(item => {
+        return {
+          account: item.account,
+          balance: etherConvert(item.balance, 'wei', unit)
+        }
+      })
   }
 }
