@@ -100,7 +100,7 @@ export = class EtherscanApi {
    * @param offset Max records to return
    * @param page Page number
    * @param sort Sort type (asc/desc)
-   * @return {Promise<TTransaction[]>}
+   * @return {Promise<TransactionDescription[]>}
    */
   public async getTransactions(
     address: string,
@@ -109,7 +109,7 @@ export = class EtherscanApi {
     offset?: number,
     page?: number,
     sort?: 'asc' | 'desc'
-  ): Promise<TTransaction[]> {
+  ): Promise<TransactionDescription[]> {
     return this.createRequest({
       action:     MODULES.ACCOUNT,
       module:     ACTIONS.TRANSACTIONS_LIST,
@@ -131,7 +131,7 @@ export = class EtherscanApi {
    * @param offset Max records to return
    * @param page Page number
    * @param sort Sort type (asc/desc)
-   * @return {Promise<TTransaction[]>}
+   * @return {Promise<TransactionDescription[]>}
    */
   public async getInternalTransactions(
     address: string,
@@ -140,7 +140,7 @@ export = class EtherscanApi {
     offset?: number,
     page?: number,
     sort?: 'asc' | 'desc'
-  ): Promise<TInternalTransaction[]> {
+  ): Promise<InternalTransactionDescription[]> {
     return this.createRequest({
       action:     MODULES.ACCOUNT,
       module:     ACTIONS.TRANSACTIONS_LIST_INTERNAL,
@@ -156,11 +156,11 @@ export = class EtherscanApi {
   /**
    * Returns a list of 'Internal' Transactions by Address
    * @param txhash Contract address
-   * @return {Promise<TInternalTransaction[]>}
+   * @return {Promise<InternalTransactionDescription[]>}
    */
   public async getInternalTransactionsByHash(
     txhash: string
-  ): Promise<TTransaction[]> {
+  ): Promise<TransactionDescription[]> {
     return this.createRequest({
       action: MODULES.ACCOUNT,
       module: ACTIONS.TRANSACTIONS_LIST_INTERNAL,
