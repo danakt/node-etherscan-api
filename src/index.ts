@@ -5,6 +5,7 @@ import { ACTIONS }                from './constants/actions'
 import { etherConvert }           from './utils/etherConvert'
 // eslint-disable-next-line no-unused-vars
 import { UNITS }                  from './constants/units'
+import { getHex }                 from './utils/getHex'
 
 /**
  * Etherscan API
@@ -327,37 +328,46 @@ export = class EtherscanApi {
    * @return {Promise<GethBlockInfo>}
    */
   public async getBlockByNumber(blockNumber: number): Promise<GethBlockInfo> {
-    const blockNumberHex = '0x' + blockNumber.toString(16)
-
     return this.createRequest({
       module:  MODULES.PROXY,
       action:  ACTIONS.GET_BLOCK_BY_NUMBER,
-      tag:     blockNumberHex,
+      tag:     '0x' + blockNumber.toString(16),
       boolean: 'true'
     })
   }
 
   /**
-   * Returns information about a uncle by block number
-   * @param {number} blockNumber Hex block number with "0x" or decimal
-   * block number
-   * @param {number} index Hex block number with "0x" or decimal
-   * block number
+   * Returns information about a uncle by block number and index
+   * @param {number} blockNumber
+   * @param {number} index
    * @return {Promise<GethBlockInfo>}
    */
   public async getUncleByBlockNumberAndIndex(
     blockNumber: number,
-    index: number
+    index?: number
   ): Promise<GethBlockInfo> {
-    const blockNumberHex = '0x' + blockNumber.toString(16)
-    const indexHex = '0x' + index.toString(16)
-
     return this.createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_UNCLE_BLOCK_NUMBER_AND_INDEX,
-      tag:    blockNumberHex,
-      index:  indexHex
+      tag:    getHex(blockNumber),
+      index:  index !== undefined ? getHex(index) : undefined
     })
+  }
+
+  /**
+   * Returns the number of transactions in a block from a block matching the
+   * given block number
+   * @param {number} blockNumber
+   * @return {Promise<number>}
+   */
+  public async getBlockTransactionCount(blockNumber: number): Promise<number> {
+    const countHex = await this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_BLOCK_TX_COUNT_BY_NUMBER,
+      tag:    getHex(blockNumber)
+    })
+
+    return parseInt(countHex, 16)
   }
 
   /**
