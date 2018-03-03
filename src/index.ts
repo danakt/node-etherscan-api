@@ -319,6 +319,26 @@ export = class EtherscanApi {
   }
 
   /**
+   * Returns information about a block by block number
+   * @param {string|number} blockNumber Hex block number with "0x" or decimal
+   * block number
+   */
+  public async getBlockByNumber(
+    blockNumber: string | number
+  ): Promise<GethBlockInfo> {
+    if (typeof blockNumber === 'number') {
+      return this.getBlockByNumber('0x' + blockNumber.toString(16))
+    }
+
+    return this.createRequest({
+      module:  MODULES.PROXY,
+      action:  ACTIONS.GET_ETH_BLOCK_BY_NUMBER,
+      tag:     blockNumber,
+      boolean: 'true'
+    })
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params
