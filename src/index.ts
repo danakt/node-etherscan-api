@@ -1,3 +1,4 @@
+import { BigNumber }              from 'bignumber.js'
 import { NETWORKS }               from './constants/networks'
 import { createRequest, TParams } from './utils/createRequest'
 import { MODULES }                from './constants/modules'
@@ -509,6 +510,29 @@ export = class EtherscanApi {
       position: getHex(position),
       tag
     })
+  }
+
+  /**
+   * Returns the current price per gas in wei
+   * @param {string} [unit="wei"] Unit of gas
+   * @return {string}
+   */
+  public async getGasPrice(unit: keyof typeof UNITS = 'wei') {
+    const priceHex = await this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_GAS_PRICE
+    })
+
+    const priceBN: BigNumber = new BigNumber(priceHex)
+    const priceFixed: string = priceBN.toFixed()
+
+    // If unit is wei, don't convert gas price
+    if (unit === 'wei') {
+      return priceFixed
+    }
+
+    // else covert to specified ether unit
+    return etherConvert(priceFixed, 'wei', unit)
   }
 
   /**
