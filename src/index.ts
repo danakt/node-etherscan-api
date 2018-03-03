@@ -310,31 +310,53 @@ export = class EtherscanApi {
 
   /**
    * Returns the number of the most recent block
+   * @return {Promise<number>}
    */
-  public async getRecentBlockNumber(): Promise<string> {
-    return this.createRequest({
+  public async getRecentBlockNumber(): Promise<number> {
+    const blockNumberHex: string = await this.createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_RECENT_BLOCK_NUMBER
     })
+
+    return parseInt(blockNumberHex, 16)
   }
 
   /**
    * Returns information about a block by block number
-   * @param {string|number} blockNumber Hex block number with "0x" or decimal
-   * block number
+   * @param {number} blockNumber Block number
+   * @return {Promise<GethBlockInfo>}
    */
-  public async getBlockByNumber(
-    blockNumber: string | number
-  ): Promise<GethBlockInfo> {
-    if (typeof blockNumber === 'number') {
-      return this.getBlockByNumber('0x' + blockNumber.toString(16))
-    }
+  public async getBlockByNumber(blockNumber: number): Promise<GethBlockInfo> {
+    const blockNumberHex = '0x' + blockNumber.toString(16)
 
     return this.createRequest({
       module:  MODULES.PROXY,
       action:  ACTIONS.GET_BLOCK_BY_NUMBER,
-      tag:     blockNumber,
+      tag:     blockNumberHex,
       boolean: 'true'
+    })
+  }
+
+  /**
+   * Returns information about a uncle by block number
+   * @param {number} blockNumber Hex block number with "0x" or decimal
+   * block number
+   * @param {number} index Hex block number with "0x" or decimal
+   * block number
+   * @return {Promise<GethBlockInfo>}
+   */
+  public async getUncleByBlockNumberAndIndex(
+    blockNumber: number,
+    index: number
+  ): Promise<GethBlockInfo> {
+    const blockNumberHex = '0x' + blockNumber.toString(16)
+    const indexHex = '0x' + index.toString(16)
+
+    return this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_UNCLE_BLOCK_NUMBER_AND_INDEX,
+      tag:    blockNumberHex,
+      index:  indexHex
     })
   }
 
