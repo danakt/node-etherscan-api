@@ -448,6 +448,23 @@ export = class EtherscanApi {
   }
 
   /**
+   * Executes a new message call immediately without creating a transaction on
+   * the block chain
+   * @param {string} to Address to execute from
+   * @param {string} data Data to transfer
+   * @return {Promise<string>}
+   */
+  public async call(to: string, data: string): Promise<string> {
+    return this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.CALL,
+      tag:    'latest',
+      to,
+      data
+    })
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params
