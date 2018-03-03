@@ -454,13 +454,34 @@ export = class EtherscanApi {
    * @param {string} data Data to transfer
    * @return {Promise<string>}
    */
-  public async call(to: string, data: string): Promise<string> {
+  public async call(
+    to: string,
+    data: string,
+    tag: string = 'latest'
+  ): Promise<string> {
     return this.createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.CALL,
-      tag:    'latest',
+      tag,
       to,
       data
+    })
+  }
+
+  /**
+   * Returns code at a given address
+   * @param {string} address
+   * @returns {Promise<string>}
+   */
+  public async getCode(
+    address: string,
+    tag: string = 'latest'
+  ): Promise<string> {
+    return this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_CODE,
+      address,
+      tag
     })
   }
 
