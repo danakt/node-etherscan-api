@@ -492,6 +492,26 @@ export = class EtherscanApi {
   }
 
   /**
+   * Returns the value from a storage position at a given address.
+   * @param {string} address
+   * @param {number} position
+   * @return {Promise<string>}
+   */
+  public async getStorageAt(
+    address: string,
+    position: number,
+    tag: string = 'latest'
+  ): Promise<string> {
+    return this.createRequest({
+      module:   MODULES.PROXY,
+      action:   ACTIONS.GET_STORAGE_AT,
+      address,
+      position: getHex(position),
+      tag
+    })
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params
