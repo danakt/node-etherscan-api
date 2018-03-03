@@ -4,8 +4,8 @@ import { MODULES }         from '../constants/modules'
 import { ACTIONS }         from '../constants/actions'
 
 /** Type of params */
-type TParams = {
-  [param: string]: void | string
+export type TParams = {
+  [param: string]: void | string | number | boolean
   module: ValueOf<typeof MODULES>
   action: ValueOf<typeof ACTIONS>
   apikey?: string
