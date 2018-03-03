@@ -3,40 +3,13 @@ import { serializeObject } from './serializeObject'
 import { MODULES }         from '../constants/modules'
 import { ACTIONS }         from '../constants/actions'
 
-/** Required params for any request */
-type TRequiredParams = {
+/** Type of params */
+type TParams = {
+  [param: string]: void | string
   module: ValueOf<typeof MODULES>
   action: ValueOf<typeof ACTIONS>
   apikey?: string
 }
-
-type TBalanceParams = {
-  address: string
-  tag?: string
-}
-
-type TTxParams = {
-  address: string
-  endblock?: number
-  startblock?: number
-  offset?: number
-  page?: number
-  sort?: 'asc' | 'desc'
-}
-
-type TInternalTxByHashParams = {
-  txhash: string
-}
-
-type TMinedBlocks = {
-  blocktype: 'blocks'
-  offset: '10'
-  page: '1'
-}
-
-/** Request parameters */
-export type TParams = TRequiredParams &
-  (TBalanceParams | TTxParams | TInternalTxByHashParams | TMinedBlocks)
 
 /**
  * Creates request
