@@ -155,34 +155,35 @@ export = class EtherscanApi {
 
   /**
    * Returns a list of 'Internal' Transactions by Address
-   * @param transactionHash Contract address
+   * @param txhash Contract address
    * @return {Promise<TInternalTransaction[]>}
    */
   public async getInternalTransactionsByHash(
-    transactionHash: string
+    txhash: string
   ): Promise<TTransaction[]> {
     return this.createRequest({
       action: MODULES.ACCOUNT,
       module: ACTIONS.TRANSACTIONS_LIST_INTERNAL,
-      txhash: transactionHash
+      txhash
     })
   }
 
   /**
    * List of Blocks Mined by Address
-   * @param address
+   * @param address Miner address
    * @param offset Max records to return
    * @param page Page number
-   * @return {Promise<TBlockInfo[]>}
+   * @return {Promise<BlockInfo[]>}
    */
-  public async getMinedBlock(
+  public async getMinedBlocks(
     address: string,
     offset?: number,
     page?: number
-  ): Promise<TBlockInfo> {
+  ): Promise<BlockInfo[]> {
     return this.createRequest({
-      action: MODULES.ACCOUNT,
-      module: ACTIONS.TRANSACTIONS_LIST_INTERNAL,
+      action:    MODULES.ACCOUNT,
+      module:    ACTIONS.GET_MINED_BLOCKS,
+      blocktype: 'blocks',
       address,
       offset,
       page
@@ -242,6 +243,20 @@ export = class EtherscanApi {
       module: MODULES.TRANSACTION,
       action: ACTIONS.GET_TRANSACTION_STATUS,
       txhash
+    })
+  }
+
+  /**
+   * Get block and uncle rewards by block number
+   * @param {number} blockNumber The number of the block
+   */
+  public async getBlockReward(
+    blockNumber: number | string
+  ): Promise<BlockRewardInfo> {
+    return this.createRequest({
+      module: MODULES.BLOCK,
+      action: ACTIONS.GET_BLOCK_REWARD,
+      bockno: blockNumber
     })
   }
 
