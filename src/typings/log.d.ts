@@ -1,7 +1,7 @@
 /**
  * Type of an event
  */
-export interface EventDescription {
+declare interface EventDescription {
   address: string
   topics: string[]
   data: string
