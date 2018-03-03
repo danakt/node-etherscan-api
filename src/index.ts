@@ -392,7 +392,7 @@ export = class EtherscanApi {
    * @param {number} [index=0]
    * @returns {Promise<TransactionDescription>}
    */
-  public getTransactionByBlockNumberAndIndex(
+  public async getTransactionByBlockNumberAndIndex(
     blockNumber: number,
     index: number = 0
   ): Promise<TransactionDescription> {
@@ -402,6 +402,22 @@ export = class EtherscanApi {
       tag:    getHex(blockNumber),
       index:  getHex(index)
     })
+  }
+
+  /**
+   * Returns the number of transactions sent from an address
+   * @param {string} address Transaction address
+   * @returns {Promise<number>}
+   */
+  public async getTransactionCount(address: string): Promise<number> {
+    const countHex = await this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_TRANSACTION_COUNT,
+      tag:    'latest',
+      address
+    })
+
+    return parseInt(countHex, 16)
   }
 
   /**
