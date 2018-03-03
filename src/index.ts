@@ -192,18 +192,57 @@ export = class EtherscanApi {
   /**
    * Returns Contract ABI
    * @param address
-   * @return {}
+   * @return {Promsie<AbiItemDescription[]>}
    */
-  public async getContractAbi(
-    address: string[]
-  ): Promise<AbiItemDescription[]> {
+  public async getContractAbi(address: string): Promise<AbiItemDescription[]> {
     const resp = await this.createRequest({
-      moudle: MODULES.CONTRACT,
+      module: MODULES.CONTRACT,
       action: ACTIONS.GET_ABI,
       address
     })
 
     return JSON.parse(resp)
+  }
+
+  /**
+   * Checks contract execution status (if there was an error during contract
+   * execution).
+   * @description "isError": "0" = Pass, "isError": "1" = Error during contract
+   * execution
+   * @param txhash Contract address
+   * @return {Promise<object>}
+   */
+  public async getContractExecutionStatus(
+    txhash: string
+  ): Promise<{
+    isError: string
+    errDescription?: string
+  }> {
+    const resp = await this.createRequest({
+      module: MODULES.TRANSACTION,
+      action: ACTIONS.GET_CONTRACT_STATUS,
+      txhash
+    })
+
+    return resp
+  }
+
+  /**
+   * Checks transaction receipt status (only applicable for post byzantium fork
+   * transactions).
+   * @description Status: 0 = Fail, 1 = Pass. Will return null/empty value
+   * for pre-byzantium fork
+   * @param txhash Transaction address
+   * @return {Promise<object>}
+   */
+  public async getTransactionStatus(
+    txhash: string
+  ): Promise<{ status: string }> {
+    return this.createRequest({
+      module: MODULES.TRANSACTION,
+      action: ACTIONS.GET_TRANSACTION_STATUS,
+      txhash
+    })
   }
 
   /**
