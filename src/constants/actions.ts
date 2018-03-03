@@ -13,7 +13,7 @@ export const ACTIONS = {
   GET_BLOCK_BY_NUMBER:              'eth_getBlockByNumber',
   GET_UNCLE_BLOCK_NUMBER_AND_INDEX: 'eth_getUncleByBlockNumberAndIndex',
   GET_BLOCK_TX_COUNT_BY_NUMBER:     'eth_getBlockTransactionCountByNumber',
-  GET_TX_BY_HASH:                   'eth_getTransactionByHash',
+  GET_TRANSACTION_BY_HASH:          'eth_getTransactionByHash',
   GET_TX_BY_BLOCK_NUMBER_AND_INDEX: 'eth_getTransactionByBlockNumberAndIndex',
   GET_TRANSACTION_COUNT:            'eth_getTransactionCount',
   SEND_RAW_TRANSACTION:             'eth_sendRawTransaction',

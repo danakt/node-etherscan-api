@@ -371,6 +371,21 @@ export = class EtherscanApi {
   }
 
   /**
+   * Returns the information about a transaction requested by transaction hash
+   * @param {string} txhash Transaction hash
+   * @return {Promise<TransactionDescription>}
+   */
+  public async getTransactionByHash(
+    txhash: string
+  ): Promise<TransactionDescription> {
+    return this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_TRANSACTION_BY_HASH,
+      txhash
+    })
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params
