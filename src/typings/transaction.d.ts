@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
-/*
- * Transaction info
- */
+/** Transaction info */
 declare type TransactionDescription = {
   blockHash: string
   blockNumber: string
@@ -26,9 +24,7 @@ declare type TransactionDescription = {
   s?: string
 }
 
-/**
- * Internal transaction info
- */
+/** Internal transaction info */
 declare type InternalTransactionDescription = {
   blockNumber: string
   timeStamp: string
@@ -44,4 +40,20 @@ declare type InternalTransactionDescription = {
   traceId: string
   isError: string
   errCode: string
+}
+
+/** Type of transaction receipt */
+declare type TransactionReceipt = {
+  blockHash: string
+  blockNumber: string
+  contractAddress?: any
+  cumulativeGasUsed: string
+  from: string
+  gasUsed: string
+  logs: EventDescription[]
+  logsBloom: string
+  root: string
+  to: string
+  transactionHash: string
+  transactionIndex: string
 }
