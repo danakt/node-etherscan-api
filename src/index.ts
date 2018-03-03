@@ -314,7 +314,7 @@ export = class EtherscanApi {
   public async getRecentBlockNumber(): Promise<string> {
     return this.createRequest({
       module: MODULES.PROXY,
-      action: ACTIONS.GET_ETH_RECENT_BLOCK_NUMBER
+      action: ACTIONS.GET_RECENT_BLOCK_NUMBER
     })
   }
 
@@ -332,7 +332,7 @@ export = class EtherscanApi {
 
     return this.createRequest({
       module:  MODULES.PROXY,
-      action:  ACTIONS.GET_ETH_BLOCK_BY_NUMBER,
+      action:  ACTIONS.GET_BLOCK_BY_NUMBER,
       tag:     blockNumber,
       boolean: 'true'
     })
