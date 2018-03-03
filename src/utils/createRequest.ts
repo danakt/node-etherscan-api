@@ -26,6 +26,10 @@ export async function createRequest(
   const data = JSON.parse(resp)
 
   if (data.error) {
+    if (data.error.message) {
+      throw new Error(data.error.message)
+    }
+
     throw new Error(data.error)
   }
 
