@@ -5,8 +5,17 @@
  */
 export function serializeObject(obj: { [any: string]: any }): string {
   return Object.keys(obj)
-    .map(
-      key => (obj[key] == null ? key : `${key}=${encodeURIComponent(obj[key])}`)
-    )
+    .map(key => {
+      if (obj[key] == null || obj[key] === false) {
+        return false
+      }
+
+      if (obj[key] === true) {
+        return key
+      }
+
+      return `${key}=${encodeURIComponent(obj[key])}`
+    })
+    .filter(Boolean)
     .join('&')
 }
