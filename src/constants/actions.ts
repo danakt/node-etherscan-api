@@ -7,5 +7,6 @@ export const ACTIONS = {
   GET_ABI:                    'getabi',
   GET_CONTRACT_STATUS:        'getstatus',
   GET_TRANSACTION_STATUS:     'gettxreceiptstatus',
-  GET_BLOCK_REWARD:           'getblockreward'
+  GET_BLOCK_REWARD:           'getblockreward',
+  GET_LOGS:                   'getLogs'
 }

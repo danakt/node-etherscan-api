@@ -261,6 +261,54 @@ export = class EtherscanApi {
   }
 
   /**
+   * Returns events logs
+   * @description The Event Log API was designed to provide an alternative to
+   * the native eth_getLogs. Topic Operator (opr) choices are either 'and' or
+   * 'or' and are restricted to the above choices only. For performance and
+   * security considerations, only the first 1000 results are return.
+   * @param {string} address
+   * @param {number} fromBlock Start block number (integer, NOT hex)
+   * @param {number|'latest'} toBlock End block number or "latest"
+   * (earliest and pending is NOT supported yet)
+   * @param {string} topic0 Topic 0
+   * @param {'and'|'or'} topic01operator Operator and|or between topic0 & topic1
+   * @param {string} topic1 Topic 1
+   * @param {'and'|'or'} topic12operator Operator and|or between topic1 & topic2
+   * @param {string} topic2 Topic 2
+   * @param {'and'|'or'} topic23operator Operator and|or between topic2 & topic3
+   * @param {string} topic3 Topic 3
+   * @param {'and'|'or'} topic02operator Operator and|or between topic0 & topic2
+   */
+  public getEventsLogs(
+    address: string,
+    fromBlock: number,
+    toBlock: number | 'latest',
+    topic0: string,
+    topic01operator: 'and' | 'or',
+    topic1: string,
+    topic12operator: 'and' | 'or',
+    topic2: string,
+    topic23operator: 'and' | 'or',
+    topic3: string,
+    topic02operator: 'and' | 'or'
+  ) {
+    return this.createRequest({
+      module:       MODULES.LOGS,
+      action:       ACTIONS.GET_LOGS,
+      fromBlock,
+      toBlock,
+      topic0,
+      topic0_1_opr: topic01operator,
+      topic1,
+      topic1_2_opr: topic12operator,
+      topic2,
+      topic2_3_opr: topic23operator,
+      topic3,
+      topic0_2_opr: topic02operator
+    })
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params
