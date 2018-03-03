@@ -47,7 +47,7 @@ export = class EtherscanApi {
   ): Promise<string> {
     const resp = await this.createRequest({
       module: MODULES.ACCOUNT,
-      action: ACTIONS.BALANCE,
+      action: ACTIONS.GET_BALANCE,
       tag:    'latest',
       address
     })
@@ -75,7 +75,7 @@ export = class EtherscanApi {
     }[] = await this.createRequest({
       apikey:  this.token,
       module:  MODULES.ACCOUNT,
-      action:  ACTIONS.BALANCE_MULTI,
+      action:  ACTIONS.GET_BALANCE_MULTI,
       tag:     'latest',
       address: addresses.join(',')
     })
@@ -112,7 +112,7 @@ export = class EtherscanApi {
   ): Promise<TransactionDescription[]> {
     return this.createRequest({
       action:     MODULES.ACCOUNT,
-      module:     ACTIONS.TRANSACTIONS_LIST,
+      module:     ACTIONS.GET_TRANSACTIONS_LIST,
       address,
       endblock:   endBlock,
       startblock: startBlock,
@@ -143,7 +143,7 @@ export = class EtherscanApi {
   ): Promise<InternalTransactionDescription[]> {
     return this.createRequest({
       action:     MODULES.ACCOUNT,
-      module:     ACTIONS.TRANSACTIONS_LIST_INTERNAL,
+      module:     ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
       address,
       endblock:   endBlock,
       startblock: startBlock,
@@ -163,7 +163,7 @@ export = class EtherscanApi {
   ): Promise<TransactionDescription[]> {
     return this.createRequest({
       action: MODULES.ACCOUNT,
-      module: ACTIONS.TRANSACTIONS_LIST_INTERNAL,
+      module: ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
       txhash
     })
   }
