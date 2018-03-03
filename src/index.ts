@@ -44,12 +44,13 @@ export = class EtherscanApi {
    */
   public async getAccountBalance(
     address: string,
-    unit: keyof typeof UNITS = 'wei'
+    unit: keyof typeof UNITS = 'wei',
+    tag: string = 'latest'
   ): Promise<string> {
     const resp = await this.createRequest({
       module: MODULES.ACCOUNT,
       action: ACTIONS.GET_BALANCE,
-      tag:    'latest',
+      tag,
       address
     })
 
@@ -68,7 +69,8 @@ export = class EtherscanApi {
    */
   public async getAccountBalances(
     addresses: string[],
-    unit: keyof typeof UNITS = 'wei'
+    unit: keyof typeof UNITS = 'wei',
+    tag: string = 'latest'
   ): Promise<{ account: string; balance: string }[]> {
     const resp: {
       account: string
@@ -77,8 +79,8 @@ export = class EtherscanApi {
       apikey:  this.token,
       module:  MODULES.ACCOUNT,
       action:  ACTIONS.GET_BALANCE_MULTI,
-      tag:     'latest',
-      address: addresses.join(',')
+      address: addresses.join(','),
+      tag
     })
 
     // Converting balances to another unit
@@ -409,11 +411,14 @@ export = class EtherscanApi {
    * @param {string} address Transaction address
    * @returns {Promise<number>}
    */
-  public async getTransactionCount(address: string): Promise<number> {
+  public async getTransactionCount(
+    address: string,
+    tag: string = 'latest'
+  ): Promise<number> {
     const countHex = await this.createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_TRANSACTION_COUNT,
-      tag:    'latest',
+      tag,
       address
     })
 
