@@ -23,6 +23,11 @@ export async function createRequest(
   const query = serializeObject(params)
   const url = `${host}/api?${query}`
   const resp = await request(url)
+  const data = JSON.parse(resp)
 
-  return JSON.parse(resp).result
+  if (data.error) {
+    throw new Error(data.error)
+  }
+
+  return data.result
 }
