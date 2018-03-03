@@ -3,5 +3,6 @@ export const MODULES = {
   CONTRACT:    'contract',
   TRANSACTION: 'transaction',
   BLOCK:       'block',
-  LOGS:        'logs'
+  LOGS:        'logs',
+  PROXY:       'proxy'
 }

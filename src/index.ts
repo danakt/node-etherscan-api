@@ -279,7 +279,7 @@ export = class EtherscanApi {
    * @param {string} topic3 Topic 3
    * @param {'and'|'or'} topic02operator Operator and|or between topic0 & topic2
    */
-  public getEventsLogs(
+  public async getEventsLogs(
     address: string,
     fromBlock: number,
     toBlock: number | 'latest',
@@ -291,7 +291,7 @@ export = class EtherscanApi {
     topic23operator: 'and' | 'or',
     topic3: string,
     topic02operator: 'and' | 'or'
-  ) {
+  ): Promise<EventDescription[]> {
     return this.createRequest({
       module:       MODULES.LOGS,
       action:       ACTIONS.GET_LOGS,
@@ -305,6 +305,16 @@ export = class EtherscanApi {
       topic2_3_opr: topic23operator,
       topic3,
       topic0_2_opr: topic02operator
+    })
+  }
+
+  /**
+   * Returns the number of the most recent block
+   */
+  public async getRecentBlockNumber(): Promise<string> {
+    return this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_RECENT_BLOCK_NUMBER
     })
   }
 
