@@ -433,6 +433,21 @@ export = class EtherscanApi {
   }
 
   /**
+   * Returns the receipt of a transaction by transaction hash
+   * @param {string} txhash Transaction hash
+   * @returns {Promise<TransactionReceipt>}
+   */
+  public async getTransactionReceipt(
+    txhash: string
+  ): Promise<TransactionReceipt> {
+    return this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_TRANSACTION_RECEIPT,
+      txhash
+    })
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params
