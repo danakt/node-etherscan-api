@@ -339,7 +339,7 @@ export = class EtherscanApi {
   /**
    * Returns information about a uncle by block number and index
    * @param {number} blockNumber
-   * @param {number} index
+   * @param {number} [index=0]
    * @return {Promise<GethBlockInfo>}
    */
   public async getUncleByBlockNumberAndIndex(
@@ -386,15 +386,31 @@ export = class EtherscanApi {
   }
 
   /**
+   * Returns information about a transaction by block number and transaction
+   * index position
+   * @param {number} blockNumber
+   * @param {number} [index=0]
+   * @returns {Promise<TransactionDescription>}
+   */
+  public getTransactionByBlockNumberAndIndex(
+    blockNumber: number,
+    index: number = 0
+  ): Promise<TransactionDescription> {
+    return this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.GET_TX_BY_BLOCK_NUMBER_AND_INDEX,
+      tag:    getHex(blockNumber),
+      index:  getHex(index)
+    })
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params
    * @return {Promise<any>}
    */
   private createRequest(params: TParams): Promise<any> {
-    return createRequest(this.host, {
-      ...params,
-      apikey: this.token
-    })
+    return createRequest(this.host, { ...params, apikey: this.token })
   }
 }
