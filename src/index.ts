@@ -513,7 +513,7 @@ export = class EtherscanApi {
   }
 
   /**
-   * Returns the current price per gas in wei
+   * Returns the current price per gas (in wei by default)
    * @param {string} [unit="wei"] Unit of gas
    * @return {string}
    */
@@ -533,6 +533,30 @@ export = class EtherscanApi {
 
     // else covert to specified ether unit
     return etherConvert(priceFixed, 'wei', unit)
+  }
+
+  /**
+   * Makes a call or transaction, which won't be added to the blockchain and
+   * returns the used gas, which can be used for estimating the used gas
+   * @param {string} to Address to get code from
+   * @param {string} value Storage position
+   * @param {string} gasPrice Gas price in wei
+   * @param {string} gas
+   */
+  public async estimateGas(
+    to: string,
+    value: string,
+    gasPrice: string,
+    gas: string
+  ): Promise<void> {
+    this.createRequest({
+      module: MODULES.PROXY,
+      action: ACTIONS.ESTIMATE_GAS,
+      to,
+      value,
+      gasPrice,
+      gas
+    })
   }
 
   /**
