@@ -3,20 +3,18 @@ import { serializeObject } from './serializeObject'
 import { MODULES }         from '../constants/modules'
 import { ACTIONS }         from '../constants/actions'
 
-// Required params for any request
+/** Required params for any request */
 type TRequiredParams = {
   module: ValueOf<typeof MODULES>
   action: ValueOf<typeof ACTIONS>
-  apikey: string
+  apikey?: string
 }
 
-// Request balance
 type TBalanceParams = {
   address: string
   tag?: string
 }
 
-// Request transactions list
 type TTxParams = {
   address: string
   endblock?: number
@@ -26,8 +24,13 @@ type TTxParams = {
   sort?: 'asc' | 'desc'
 }
 
+type TInternalTxByHashParams = {
+  txhash: string
+}
+
 /** Request parameters */
-export type TParams = TRequiredParams & (TBalanceParams | TTxParams)
+export type TParams = TRequiredParams &
+  (TBalanceParams | TTxParams | TInternalTxByHashParams)
 
 /**
  * Creates request

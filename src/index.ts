@@ -1,10 +1,10 @@
-import { NETWORKS }      from './constants/networks'
-import { createRequest } from './utils/createRequest'
-import { MODULES }       from './constants/modules'
-import { ACTIONS }       from './constants/actions'
-import { etherConvert }  from './utils/etherConvert'
+import { NETWORKS }               from './constants/networks'
+import { createRequest, TParams } from './utils/createRequest'
+import { MODULES }                from './constants/modules'
+import { ACTIONS }                from './constants/actions'
+import { etherConvert }           from './utils/etherConvert'
 // eslint-disable-next-line no-unused-vars
-import { UNITS }         from './constants/units'
+import { UNITS }                  from './constants/units'
 
 /**
  * Etherscan API
@@ -45,8 +45,7 @@ export = class EtherscanApi {
     address: string,
     unit: keyof typeof UNITS = 'wei'
   ): Promise<string> {
-    const resp = await createRequest(this.host, {
-      apikey: this.token,
+    const resp = await this.createRequest({
       module: MODULES.ACCOUNT,
       action: ACTIONS.BALANCE,
       tag:    'latest',
@@ -70,16 +69,16 @@ export = class EtherscanApi {
     addresses: string[],
     unit: keyof typeof UNITS = 'wei'
   ): Promise<{ account: string; balance: string }[]> {
-    const resp: { account: string; balance: string }[] = await createRequest(
-      this.host,
-      {
-        apikey:  this.token,
-        module:  MODULES.ACCOUNT,
-        action:  ACTIONS.BALANCE_MULTI,
-        tag:     'latest',
-        address: addresses.join(',')
-      }
-    )
+    const resp: {
+      account: string
+      balance: string
+    }[] = await this.createRequest({
+      apikey:  this.token,
+      module:  MODULES.ACCOUNT,
+      action:  ACTIONS.BALANCE_MULTI,
+      tag:     'latest',
+      address: addresses.join(',')
+    })
 
     // Converting balances to another unit
     return unit === 'wei' || !(unit in UNITS)
@@ -94,9 +93,14 @@ export = class EtherscanApi {
 
   /**
    * Get a list of 'Normal' Transactions By Address
-   * @param address
+   * Returns up to a maximum of the last 10000 transactions only
+   * @param address Contract address
    * @param startBlock Starting block number to retrieve results
    * @param endBlock Ending block number to retrieve results
+   * @param offset Max records to return
+   * @param page Page number
+   * @param sort Sort type (asc/desc)
+   * @return {Promise<TTransaction[]>}
    */
   public async getTransactions(
     address: string,
@@ -106,8 +110,7 @@ export = class EtherscanApi {
     page?: number,
     sort?: 'asc' | 'desc'
   ): Promise<TTransaction[]> {
-    return createRequest(this.host, {
-      apikey:     this.token,
+    return this.createRequest({
       action:     MODULES.ACCOUNT,
       module:     ACTIONS.TRANSACTIONS_LIST,
       address,
@@ -116,6 +119,65 @@ export = class EtherscanApi {
       offset,
       page,
       sort
+    })
+  }
+
+  /**
+   * Returns a list of 'Internal' Transactions by Address
+   * Returns up to a maximum of the last 10000 transactions only
+   * @param address Contract address
+   * @param startBlock Starting block number to retrieve results
+   * @param endBlock Ending block number to retrieve results
+   * @param offset Max records to return
+   * @param page Page number
+   * @param sort Sort type (asc/desc)
+   * @return {Promise<TTransaction[]>}
+   */
+  public async getInternalTransactions(
+    address: string,
+    startBlock?: number,
+    endBlock?: number,
+    offset?: number,
+    page?: number,
+    sort?: 'asc' | 'desc'
+  ): Promise<TInternalTransaction[]> {
+    return this.createRequest({
+      action:     MODULES.ACCOUNT,
+      module:     ACTIONS.TRANSACTIONS_LIST_INTERNAL,
+      address,
+      endblock:   endBlock,
+      startblock: startBlock,
+      offset,
+      page,
+      sort
+    })
+  }
+
+  /**
+   * Returns a list of 'Internal' Transactions by Address
+   * @param transactionHash Contract address
+   * @return {Promise<TInternalTransaction[]>}
+   */
+  public async getInternalTransactionsByHash(
+    transactionHash: string
+  ): Promise<TTransaction[]> {
+    return this.createRequest({
+      action: MODULES.ACCOUNT,
+      module: ACTIONS.TRANSACTIONS_LIST_INTERNAL,
+      txhash: transactionHash
+    })
+  }
+
+  /**
+   * Creates request
+   * @private
+   * @param params Query params
+   * @return {Promise<any>}
+   */
+  private createRequest(params: TParams): Promise<any> {
+    return createRequest(this.host, {
+      ...params,
+      apikey: this.token
     })
   }
 }
