@@ -28,9 +28,15 @@ type TInternalTxByHashParams = {
   txhash: string
 }
 
+type TMinedBlocks = {
+  blocktype: 'blocks'
+  offset: '10'
+  page: '1'
+}
+
 /** Request parameters */
 export type TParams = TRequiredParams &
-  (TBalanceParams | TTxParams | TInternalTxByHashParams)
+  (TBalanceParams | TTxParams | TInternalTxByHashParams | TMinedBlocks)
 
 /**
  * Creates request

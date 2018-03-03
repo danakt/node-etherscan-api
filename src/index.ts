@@ -169,6 +169,27 @@ export = class EtherscanApi {
   }
 
   /**
+   * List of Blocks Mined by Address
+   * @param address
+   * @param offset Max records to return
+   * @param page Page number
+   * @return {Promise<TBlockInfo[]>}
+   */
+  public async getMinedBlock(
+    address: string,
+    offset?: number,
+    page?: number
+  ): Promise<TBlockInfo> {
+    return this.createRequest({
+      action: MODULES.ACCOUNT,
+      module: ACTIONS.TRANSACTIONS_LIST_INTERNAL,
+      address,
+      offset,
+      page
+    })
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params
