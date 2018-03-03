@@ -9,5 +9,5 @@ export const ACTIONS = {
   GET_TRANSACTION_STATUS:         'gettxreceiptstatus',
   GET_BLOCK_REWARD:               'getblockreward',
   GET_LOGS:                       'getLogs',
-  GET_RECENT_BLOCK_NUMBER:        'eth_blockNumber'
+  GET_ETH_RECENT_BLOCK_NUMBER:    'eth_blockNumber'
 }
