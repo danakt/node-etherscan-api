@@ -1,25 +1,29 @@
+/* eslint-disable camelcase */
 /*
  * Transaction info
  */
 declare type TransactionDescription = {
   blockHash: string
   blockNumber: string
-  confirmations: string
-  contractAddress: string
-  cumulativeGasUsed: string
+  confirmations?: string
+  contractAddress?: string
+  cumulativeGasUsed?: string
   from: string
   gas: string
   gasPrice: string
   gasUsed: string
   hash: string
   input: string
-  isError: string
+  isError?: string
   nonce: string
-  timeStamp: string
+  timeStamp?: string
   to: string
   transactionIndex: string
-  txreceipt_status: string
+  txreceipt_status?: string
   value: string
+  v?: string
+  r?: string
+  s?: string
 }
 
 /**
