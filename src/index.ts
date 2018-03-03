@@ -344,13 +344,13 @@ export = class EtherscanApi {
    */
   public async getUncleByBlockNumberAndIndex(
     blockNumber: number,
-    index?: number
+    index: number = 0
   ): Promise<GethBlockInfo> {
     return this.createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_UNCLE_BLOCK_NUMBER_AND_INDEX,
       tag:    getHex(blockNumber),
-      index:  index !== undefined ? getHex(index) : undefined
+      index:  getHex(index)
     })
   }
 
