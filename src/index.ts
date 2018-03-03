@@ -190,6 +190,23 @@ export = class EtherscanApi {
   }
 
   /**
+   * Returns Contract ABI
+   * @param address
+   * @return {}
+   */
+  public async getContractAbi(
+    address: string[]
+  ): Promise<AbiItemDescription[]> {
+    const resp = await this.createRequest({
+      moudle: MODULES.CONTRACT,
+      action: ACTIONS.GET_ABI,
+      address
+    })
+
+    return JSON.parse(resp)
+  }
+
+  /**
    * Creates request
    * @private
    * @param params Query params

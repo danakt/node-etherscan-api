@@ -3,5 +3,6 @@ export const ACTIONS = {
   BALANCE_MULTI:              'balancemulti',
   TRANSACTIONS_LIST:          'txlist',
   TRANSACTIONS_LIST_INTERNAL: 'txlistinternal',
-  MINED_BLOCKS:               'getminedblocks'
+  MINED_BLOCKS:               'getminedblocks',
+  GET_ABI:                    'getabi'
 }
