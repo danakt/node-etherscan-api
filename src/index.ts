@@ -426,7 +426,8 @@ export = class EtherscanApi {
   }
 
   /**
-   * Creates new message call transaction or a contract creation for signed transactions
+   * Creates new message call transaction or a contract creation for signed
+   * transactions
    * @param {string} hex Raw hex encoded transaction that you want to send
    */
   public async sendRawTransaction(hex: string): Promise<void> {
