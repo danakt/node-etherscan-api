@@ -43,10 +43,3 @@ declare type TInternalTransaction = {
   isError: string
   errCode: string
 }
-
-/** Block info */
-declare type TBlockInfo = {
-  blockNumber: string
-  blockReward: string
-  timeStamp: string
-}
