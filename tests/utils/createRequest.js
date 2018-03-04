@@ -8,6 +8,6 @@ test('Create request', () => {
     tag:     'latest',
     apikey:  'YourApiKeyToken'
   }).then(data => {
-    expect(data).toBe('670456214060315498951364')
+    expect(isNaN(Number(data))).toBeFalsy()
   })
 })
