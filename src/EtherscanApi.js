@@ -64,7 +64,7 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string|number} endBlock Ending block number to retrieve results
    * @param {number} offset Max records to return
    * @param {number} page Page number
-   * @param {number} sort Sort type (asc/desc)
+   * @param {"asc"|"desc"} sort Sort type
    * @returns {Promise<TransactionDescription[]>}
    */
   async getTransactions(address, startBlock, endBlock, offset, page, sort) {
@@ -89,7 +89,7 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string|number} endBlock Ending block number to retrieve results
    * @param {string|number} offset Max records to return
    * @param {string|number} page Page number
-   * @param {'asc'|'desc'} sort Sort type (asc/desc)
+   * @param {"asc"|"desc"} sort Sort type
    * @returns {Promise<TransactionDescription[]>}
    */
   async getInternalTransactions(
@@ -130,7 +130,7 @@ class EtherscanApi extends EtherscanRequest {
    * List of blocks mined by address
    * @method getMinedBlocks
    * @param {string} address Miner address
-   * @param {'blocks'|'uncles'} type Type of block: blocks (full blocks only)
+   * @param {"blocks"|"uncles"} type Type of block: blocks (full blocks only)
    * or uncles (uncle blocks only)
    * @param {number} offset Max records to return
    * @param {number} page Page number
@@ -222,13 +222,13 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number|'latest'} toBlock End block number or "latest"
    * (earliest and pending is NOT supported yet)
    * @param {string} topic0 Topic 0
-   * @param {string} [topic01operator] Operator (and|or) between topic0 & topic1
+   * @param {"and"|"or"} [topic01operator] Operator between topic0 & topic1
    * @param {string} [topic1] Topic 1
-   * @param {string} [topic12operator] Operator (and|or) between topic1 & topic2
+   * @param {"and"|"or"} [topic12operator] Operator between topic1 & topic2
    * @param {string} [topic2] Topic 2
-   * @param {string} [topic23operator] Operator (and|or) between topic2 & topic3
+   * @param {"and"|"or"} [topic23operator] Operator between topic2 & topic3
    * @param {string} [topic3] Topic 3
-   * @param {string} [topic02operator] Operator (and|or) between topic0 & topic2
+   * @param {"and"|"or"} [topic02operator] Operator between topic0 & topic2
    */
   async getEventsLogs(
     address,
