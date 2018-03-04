@@ -525,7 +525,7 @@ export class EtherscanApi extends EtherscanRequest {
    */
   public async estimateGas(
     to: string,
-    value: string,
+    value: string | number,
     gasPrice: string,
     gas: string
   ): Promise<void> {
