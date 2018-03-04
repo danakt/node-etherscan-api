@@ -9,6 +9,7 @@ const EtherscanRequest = require('./EtherscanRequest')
 class EtherscanApi extends EtherscanRequest {
   /**
    * Returns Ether Balance for a single Address
+   * @method getAccountBalance
    * @param {string} address
    * @param {string?} [unit="wei"] Balance unit
    * @returns {Promise<string>}
@@ -29,6 +30,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Get Ether Balance for multiple Addresses in a single call
+   * @method getAccountBalances
    * @description Up to a maximum of 20 accounts in a single batch
    * @param {Array<string>} addresses
    * @param {string?} [unit="wei"] Balance unit
@@ -56,6 +58,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Get a list of 'Normal' Transactions By Address
    * Returns up to a maximum of the last 10000 transactions only
+   * @method getTransactions
    * @param {string} address Contract address
    * @param {string|number} startBlock Starting block number to retrieve results
    * @param {string|number} endBlock Ending block number to retrieve results
@@ -80,6 +83,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns a list of 'Internal' Transactions by Address
    * Returns up to a maximum of the last 10000 transactions only
+   * @method getInternalTransactions
    * @param {string} address Contract address
    * @param {string|number} startBlock Starting block number to retrieve results
    * @param {string|number} endBlock Ending block number to retrieve results
@@ -110,6 +114,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns a list of 'Internal' Transactions by Address
+   * @method getInternalTransactionsByHash
    * @param txhash Contract address
    * @returns {Promise<InternalTransactionDescription[]>}
    */
@@ -123,6 +128,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * List of Blocks Mined by Address
+   * @method getMinedBlocks
    * @param {string} address Miner address
    * @param {'blocks'|'uncles'} type Type of block: blocks (full blocks only)
    * or uncles (uncle blocks only)
@@ -143,6 +149,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns Contract ABI
+   * @method getContractAbi
    * @param address
    * @returns {Promsie<AbiItemDescription[]>}
    */
@@ -159,6 +166,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Checks contract execution status (if there was an error during contract
    * execution).
+   * @method getContractExecutionStatus
    * @description "isError": "0" = Pass, "isError": "1" = Error during contract
    * execution
    * @param {string} txhash Contract address
@@ -177,6 +185,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Checks transaction receipt status (only applicable for post byzantium fork
    * transactions).
+   * @method getTransactionStatus
    * @description Status: 0 = Fail, 1 = Pass. Will return null/empty value
    * for pre-byzantium fork
    * @param {string} txhash Transaction address
@@ -192,6 +201,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Get block and uncle rewards by block number
+   * @method getBlockReward
    * @param {number} blockNumber The number of the block
    */
   async getBlockReward(blockNumber) {
@@ -204,6 +214,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns events logs
+   * @method getEventsLogs
    * @description The Event Log API was designed to provide an alternative to
    * the native eth_getLogs. Topic Operator (opr) choices are either '''and' or
    * 'or' and are restricted to the above choices only. For performance and
@@ -252,6 +263,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns the number of the most recent block
+   * @method getRecentBlockNumber
    * @returns {Promise<number>}
    */
   async getRecentBlockNumber() {
@@ -265,6 +277,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns information about a block by block number
+   * @method getBlockByNumber
    * @param {number} blockNumber Block number
    * @returns {Promise<GethBlockInfo>}
    */
@@ -279,6 +292,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns information about a uncle by block number and index
+   * @method getUncleByBlockNumberAndIndex
    * @param {number} blockNumber
    * @param {number} [index=0]
    * @returns {Promise<GethBlockInfo>}
@@ -295,6 +309,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns the number of transactions in a block from a block matching the
    * given block number
+   * @method getBlockTransactionCount
    * @param {number} blockNumber
    * @returns {Promise<number>}
    */
@@ -309,6 +324,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns the information about a transaction requested by transaction hash
+   * @method getTransactionByHash
    * @param {string} txhash Transaction hash
    * @returns {Promise<TransactionDescription>}
    */
@@ -323,6 +339,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns information about a transaction by block number and transaction
    * index position
+   * @method getTransactionByBlockNumberAndIndex
    * @param {number} blockNumber
    * @param {number} [index=0]
    * @returns {Promise<TransactionDescription>}
@@ -338,6 +355,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns the number of transactions sent from an address
+   * @method getTransactionCount
    * @param {string} address Transaction address
    * @returns {Promise<number>}
    */
@@ -354,6 +372,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Creates new message call transaction or a contract creation for signed
    * transactions
+   * @method sendRawTransaction
    * @param {string} hex Raw hex encoded transaction that you want to send
    */
   async sendRawTransaction(hex) {
@@ -366,6 +385,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns the receipt of a transaction by transaction hash
+   * @method getTransactionReceipt
    * @param {string} txhash Transaction hash
    * @returns {Promise<TransactionReceipt>}
    */
@@ -380,6 +400,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Executes a new message call immediately without creating a transaction on
    * the block chain
+   * @method call
    * @param {string} to Address to execute from
    * @param {string} data Data to transfer
    * @returns {Promise<string>}
@@ -396,6 +417,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns code at a given address
+   * @method getCode
    * @param {string} address
    * @returns {Promise<string>}
    */
@@ -410,6 +432,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns the value from a storage position at a given address.
+   * @method getStorageAt
    * @param {string} address
    * @param {number} position
    * @returns {Promise<string>}
@@ -426,6 +449,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns the current price per gas (in wei by default)
+   * @method getGasPrice
    * @param {string} [unit="wei"] Unit of gas
    * @returns {string}
    */
@@ -450,6 +474,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Makes a call or transaction, which won't be added to the blockchain and
    * returns the used gas, which can be used for estimating the used gas
+   * @method estimateGas
    * @param {string} to Address to get code from
    * @param {string} value Storage position
    * @param {string} gasPrice Gas price in wei
@@ -468,6 +493,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Get ERC20-Token TotalSupply by ContractAddress
+   * @method getTokenByContractAddress
    * @param {string} contractAddress
    * @returns {Promise<string>}
    */
@@ -481,6 +507,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Get ERC20-Token Account Balance for TokenContractAddress
+   * @method getTokenBalanceByContractAddress
    * @param {string} contractAddress
    * @returns {Promise<string>}
    */
@@ -500,6 +527,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Get total supply of Ether
+   * @method getTotalEtherSupply
    * @returns {Promise<string>}
    */
   async getTotalEtherSupply() {
@@ -511,6 +539,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Get Ether last price
+   * @method getEtherLastPrice
    * @returns {Promise<EtherPrice>}
    */
   async getEtherLastPrice() {
