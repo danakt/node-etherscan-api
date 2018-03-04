@@ -1,0 +1,8 @@
+# dirs
+node_modules/
+.vscode/
+coverage/
+build/
+
+# files
+package-lock.json
