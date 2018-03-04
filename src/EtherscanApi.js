@@ -12,14 +12,16 @@ class EtherscanApi {
    * @class EtherscanApi
    * @constructor
    * @param {string} [token] Etherscan API token
-   * @param {string} [network=MAIN] Network name. Available: main, ropsten,
-   * kovan, rinkeby
+   * @param {string} [networkName=MAIN] Network name. Available:
+   *  main, ropsten, kovan and rinkeby
    */
-  constructor(token = '', network = 'MAIN') {
+  constructor(token = '', networkName = 'MAIN') {
+    const netName = networkName.toUpperCase()
+    const network = netName in NETWORKS ? netName : 'MAIN'
+
     this.token = token
-    const netName = network.toUpperCase()
-    this.network = netName in NETWORKS ? netName : 'MAIN'
-    this.host = NETWORKS[this.network]
+    this.network = network
+    this.host = NETWORKS[network]
   }
 
   /**
