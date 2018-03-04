@@ -234,9 +234,9 @@ export class EtherscanApi extends EtherscanRequest {
     blockNumber: number | string
   ): Promise<BlockRewardInfo> {
     return this.createRequest({
-      module: MODULES.BLOCK,
-      action: ACTIONS.GET_BLOCK_REWARD,
-      bockno: blockNumber
+      module:  MODULES.BLOCK,
+      action:  ACTIONS.GET_BLOCK_REWARD,
+      blockno: blockNumber
     })
   }
 
