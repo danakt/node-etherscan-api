@@ -2,11 +2,12 @@ const BigNumber = require('bignumber.js')
 const MODULES = require('./constants/modules')
 const ACTIONS = require('./constants/actions')
 const UNITS = require('./constants/units')
+const NETWORKS = require('./constants/networks')
 const etherConvert = require('./utils/etherConvert')
 const getHex = require('./utils/getHex')
-const EtherscanRequest = require('./EtherscanRequest')
+const createRequest = require('./utils/createRequest')
 
-class EtherscanApi extends EtherscanRequest {
+class EtherscanApi {
   /**
    * @class EtherscanApi
    * @constructor
@@ -15,7 +16,23 @@ class EtherscanApi extends EtherscanRequest {
    * kovan, rinkeby
    */
   constructor(token = '', network = 'MAIN') {
-    super(token, network)
+    this.token = token
+    const netName = network.toUpperCase()
+    this.network = netName in NETWORKS ? netName : 'MAIN'
+    this.host = NETWORKS[this.network]
+  }
+
+  /**
+   * Creates request
+   * @private
+   * @param {object} params Query params
+   * @return {Promise<any>}
+   */
+  _createRequest(params) {
+    return createRequest(this.host, {
+      ...params,
+      apikey: this.token
+    })
   }
 
   /**
@@ -25,18 +42,18 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} [unit=wei] Balance unit
    * @returns {Promise<string>}
    */
-  async getAccountBalance(address, unit = 'wei', tag = 'latest') {
-    const resp = await this.createRequest({
+  getAccountBalance(address, unit = 'wei', tag = 'latest') {
+    return this._createRequest({
       module: MODULES.ACCOUNT,
       action: ACTIONS.GET_BALANCE,
       tag,
       address
+    }).then(resp => {
+      // Converting balance to another unit
+      return unit === 'wei' || !(unit in UNITS)
+        ? resp
+        : etherConvert(resp, 'wei', unit)
     })
-
-    // Converting balance to another unit
-    return unit === 'wei' || !(unit in UNITS)
-      ? resp
-      : etherConvert(resp, 'wei', unit)
   }
 
   /**
@@ -47,23 +64,24 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} [unit=wei] Balance unit
    * @return {Promise<object>} Array of "{ account: string; balance: string }[]"
    */
-  async getAccountBalances(addresses, unit = 'wei', tag = 'latest') {
-    const resp = await this.createRequest({
+  getAccountBalances(addresses, unit = 'wei', tag = 'latest') {
+    return this._createRequest({
       apikey:  this.token,
       module:  MODULES.ACCOUNT,
       action:  ACTIONS.GET_BALANCE_MULTI,
       address: addresses.join(','),
       tag
+    }).then(resp => {
+      // Converting balances to another unit
+      return unit === 'wei' || !(unit in UNITS)
+        ? resp
+        : resp.map(item => {
+          return {
+            account: item.account,
+            balance: etherConvert(item.balance, 'wei', unit)
+          }
+        })
     })
-    // Converting balances to another unit
-    return unit === 'wei' || !(unit in UNITS)
-      ? resp
-      : resp.map(item => {
-        return {
-          account: item.account,
-          balance: etherConvert(item.balance, 'wei', unit)
-        }
-      })
   }
 
   /**
@@ -78,8 +96,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {"asc"|"desc"} sort Sort type
    * @returns {Promise<TransactionDescription[]>}
    */
-  async getTransactions(address, startBlock, endBlock, offset, page, sort) {
-    return this.createRequest({
+  getTransactions(address, startBlock, endBlock, offset, page, sort) {
+    return this._createRequest({
       module:     MODULES.ACCOUNT,
       action:     ACTIONS.GET_TRANSACTIONS_LIST,
       address,
@@ -103,15 +121,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {"asc"|"desc"} sort Sort type
    * @returns {Promise<TransactionDescription[]>}
    */
-  async getInternalTransactions(
-    address,
-    startBlock,
-    endBlock,
-    offset,
-    page,
-    sort
-  ) {
-    return this.createRequest({
+  getInternalTransactions(address, startBlock, endBlock, offset, page, sort) {
+    return this._createRequest({
       module:     MODULES.ACCOUNT,
       action:     ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
       address,
@@ -129,8 +140,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param txhash Contract address
    * @returns {Promise<InternalTransactionDescription[]>}
    */
-  async getInternalTransactionsByHash(txhash) {
-    return this.createRequest({
+  getInternalTransactionsByHash(txhash) {
+    return this._createRequest({
       module: MODULES.ACCOUNT,
       action: ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
       txhash
@@ -147,8 +158,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number} page Page number
    * @returns {Promise<BlockInfo[]>}
    */
-  async getMinedBlocks(address, type = 'blocks', offset, page) {
-    return this.createRequest({
+  getMinedBlocks(address, type = 'blocks', offset, page) {
+    return this._createRequest({
       module:    MODULES.ACCOUNT,
       action:    ACTIONS.GET_MINED_BLOCKS,
       blocktype: type,
@@ -164,14 +175,14 @@ class EtherscanApi extends EtherscanRequest {
    * @param address
    * @returns {Promsie<AbiItemDescription[]>}
    */
-  async getContractAbi(address) {
-    const resp = await this.createRequest({
+  getContractAbi(address) {
+    return this._createRequest({
       module: MODULES.CONTRACT,
       action: ACTIONS.GET_ABI,
       address
+    }).then(resp => {
+      return JSON.parse(resp)
     })
-
-    return JSON.parse(resp)
   }
 
   /**
@@ -182,14 +193,12 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} txhash Contract address
    * @returns {Promise<object>}
    */
-  async getContractExecutionStatus(txhash) {
-    const resp = await this.createRequest({
+  getContractExecutionStatus(txhash) {
+    return this._createRequest({
       module: MODULES.TRANSACTION,
       action: ACTIONS.GET_CONTRACT_STATUS,
       txhash
     })
-
-    return resp
   }
 
   /**
@@ -200,8 +209,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} txhash Transaction address
    * @returns {Promise<object>}
    */
-  async getTransactionStatus(txhash) {
-    return this.createRequest({
+  getTransactionStatus(txhash) {
+    return this._createRequest({
       module: MODULES.TRANSACTION,
       action: ACTIONS.GET_TRANSACTION_STATUS,
       txhash
@@ -213,8 +222,8 @@ class EtherscanApi extends EtherscanRequest {
    * @method getBlockReward
    * @param {number} blockNumber The number of the block
    */
-  async getBlockReward(blockNumber) {
-    return this.createRequest({
+  getBlockReward(blockNumber) {
+    return this._createRequest({
       module:  MODULES.BLOCK,
       action:  ACTIONS.GET_BLOCK_REWARD,
       blockno: blockNumber
@@ -241,7 +250,7 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} [topic3] Topic 3
    * @param {"and"|"or"} [topic02operator] Operator between topic0 & topic2
    */
-  async getEventsLogs(
+  getEventsLogs(
     address,
     fromBlock,
     toBlock,
@@ -254,7 +263,7 @@ class EtherscanApi extends EtherscanRequest {
     topic3,
     topic02operator
   ) {
-    return this.createRequest({
+    return this._createRequest({
       module:       MODULES.LOGS,
       action:       ACTIONS.GET_LOGS,
       fromBlock,
@@ -275,13 +284,13 @@ class EtherscanApi extends EtherscanRequest {
    * @method getRecentBlockNumber
    * @returns {Promise<number>}
    */
-  async getRecentBlockNumber() {
-    const blockNumberHex = await this.createRequest({
+  getRecentBlockNumber() {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_RECENT_BLOCK_NUMBER
+    }).then(blockNumberHex => {
+      return parseInt(blockNumberHex, 16)
     })
-
-    return parseInt(blockNumberHex, 16)
   }
 
   /**
@@ -290,8 +299,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number} blockNumber Block number
    * @returns {Promise<GethBlockInfo>}
    */
-  async getBlockByNumber(blockNumber) {
-    return this.createRequest({
+  getBlockByNumber(blockNumber) {
+    return this._createRequest({
       module:  MODULES.PROXY,
       action:  ACTIONS.GET_BLOCK_BY_NUMBER,
       tag:     '0x' + blockNumber.toString(16),
@@ -306,8 +315,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number} [index=0]
    * @returns {Promise<GethBlockInfo>}
    */
-  async getUncleByBlockNumberAndIndex(blockNumber, index = 0) {
-    return this.createRequest({
+  getUncleByBlockNumberAndIndex(blockNumber, index = 0) {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_UNCLE_BLOCK_NUMBER_AND_INDEX,
       tag:    getHex(blockNumber),
@@ -322,13 +331,14 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number} blockNumber
    * @returns {Promise<number>}
    */
-  async getBlockTransactionCount(blockNumber) {
-    const countHex = await this.createRequest({
+  getBlockTransactionCount(blockNumber) {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_BLOCK_TX_COUNT_BY_NUMBER,
       tag:    getHex(blockNumber)
+    }).then(countHex => {
+      return parseInt(countHex, 16)
     })
-    return parseInt(countHex, 16)
   }
 
   /**
@@ -337,8 +347,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} txhash Transaction hash
    * @returns {Promise<TransactionDescription>}
    */
-  async getTransactionByHash(txhash) {
-    return this.createRequest({
+  getTransactionByHash(txhash) {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_TRANSACTION_BY_HASH,
       txhash
@@ -353,8 +363,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number} [index=0]
    * @returns {Promise<TransactionDescription>}
    */
-  async getTransactionByBlockNumberAndIndex(blockNumber, index = 0) {
-    return this.createRequest({
+  getTransactionByBlockNumberAndIndex(blockNumber, index = 0) {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_TX_BY_BLOCK_NUMBER_AND_INDEX,
       tag:    getHex(blockNumber),
@@ -368,14 +378,15 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} address Transaction address
    * @returns {Promise<number>}
    */
-  async getTransactionCount(address, tag = 'latest') {
-    const countHex = await this.createRequest({
+  getTransactionCount(address, tag = 'latest') {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_TRANSACTION_COUNT,
       tag,
       address
+    }).then(countHex => {
+      return parseInt(countHex, 16)
     })
-    return parseInt(countHex, 16)
   }
 
   /**
@@ -384,8 +395,8 @@ class EtherscanApi extends EtherscanRequest {
    * @method sendRawTransaction
    * @param {string} hex Raw hex encoded transaction that you want to send
    */
-  async sendRawTransaction(hex) {
-    this.createRequest({
+  sendRawTransaction(hex) {
+    this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.SEND_RAW_TRANSACTION,
       hex
@@ -398,8 +409,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} txhash Transaction hash
    * @returns {Promise<TransactionReceipt>}
    */
-  async getTransactionReceipt(txhash) {
-    return this.createRequest({
+  getTransactionReceipt(txhash) {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_TRANSACTION_RECEIPT,
       txhash
@@ -414,8 +425,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} data Data to transfer
    * @returns {Promise<string>}
    */
-  async call(to, data, tag = 'latest') {
-    return this.createRequest({
+  call(to, data, tag = 'latest') {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.CALL,
       tag,
@@ -430,8 +441,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} address
    * @returns {Promise<string>}
    */
-  async getCode(address, tag = 'latest') {
-    return this.createRequest({
+  getCode(address, tag = 'latest') {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_CODE,
       address,
@@ -446,8 +457,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number} position
    * @returns {Promise<string>}
    */
-  async getStorageAt(address, position, tag = 'latest') {
-    return this.createRequest({
+  getStorageAt(address, position, tag = 'latest') {
+    return this._createRequest({
       module:   MODULES.PROXY,
       action:   ACTIONS.GET_STORAGE_AT,
       address,
@@ -462,22 +473,22 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} [unit=wei] Unit of gas
    * @returns {string}
    */
-  async getGasPrice(unit = 'wei') {
-    const priceHex = await this.createRequest({
+  getGasPrice(unit = 'wei') {
+    return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_GAS_PRICE
+    }).then(priceHex => {
+      const priceBN = new BigNumber(priceHex)
+      const priceFixed = priceBN.toFixed()
+
+      // If unit is wei, don't convert gas price
+      if (unit === 'wei') {
+        return priceFixed
+      }
+
+      // else covert to specified ether unit
+      return etherConvert(priceFixed, 'wei', unit)
     })
-
-    const priceBN = new BigNumber(priceHex)
-    const priceFixed = priceBN.toFixed()
-
-    // If unit is wei, don't convert gas price
-    if (unit === 'wei') {
-      return priceFixed
-    }
-
-    // else covert to specified ether unit
-    return etherConvert(priceFixed, 'wei', unit)
   }
 
   /**
@@ -489,8 +500,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} gasPrice Gas price in wei
    * @param {string} gas
    */
-  async estimateGas(to, value, gasPrice, gas) {
-    this.createRequest({
+  estimateGas(to, value, gasPrice, gas) {
+    this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.ESTIMATE_GAS,
       to,
@@ -506,8 +517,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} contractAddress
    * @returns {Promise<string>}
    */
-  async getTokenByContractAddress(contractAddress) {
-    return this.createRequest({
+  getTokenByContractAddress(contractAddress) {
+    return this._createRequest({
       module:          MODULES.STATS,
       action:          ACTIONS.GET_TOKEN_BY_CONTRACT,
       contractaddress: contractAddress
@@ -520,12 +531,8 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string} contractAddress
    * @returns {Promise<string>}
    */
-  async getTokenBalanceByContractAddress(
-    contractAddress,
-    address,
-    tag = 'latest'
-  ) {
-    return this.createRequest({
+  getTokenBalanceByContractAddress(contractAddress, address, tag = 'latest') {
+    return this._createRequest({
       module:          MODULES.ACCOUNT,
       action:          ACTIONS.GET_TOKEN_BALANCE_BY_CONTRACT,
       contractaddress: contractAddress,
@@ -539,8 +546,8 @@ class EtherscanApi extends EtherscanRequest {
    * @method getTotalEtherSupply
    * @returns {Promise<string>}
    */
-  async getTotalEtherSupply() {
-    return this.createRequest({
+  getTotalEtherSupply() {
+    return this._createRequest({
       module: MODULES.STATS,
       action: ACTIONS.GET_TOTAL_ETHER_SUPPLY
     })
@@ -551,8 +558,8 @@ class EtherscanApi extends EtherscanRequest {
    * @method getEtherLastPrice
    * @returns {Promise<EtherPrice>}
    */
-  async getEtherLastPrice() {
-    return this.createRequest({
+  getEtherLastPrice() {
+    return this._createRequest({
       module: MODULES.STATS,
       action: ACTIONS.GET_LAST_ETHER_PRICE
     })
