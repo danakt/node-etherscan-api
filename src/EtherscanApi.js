@@ -6,6 +6,9 @@ const etherConvert = require('./utils/etherConvert')
 const getHex = require('./utils/getHex')
 const EtherscanRequest = require('./EtherscanRequest')
 
+/**
+ * The Etherscan API
+ */
 class EtherscanApi extends EtherscanRequest {
   /**
    * Returns Ether balance for a single address
