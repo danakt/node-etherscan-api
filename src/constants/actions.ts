@@ -22,5 +22,7 @@ export const ACTIONS = {
   GET_CODE:                         'eth_getCode',
   GET_STORAGE_AT:                   'eth_getStorageAt',
   GET_GAS_PRICE:                    'eth_gasPrice',
-  ESTIMATE_GAS:                     'eth_estimateGas'
+  ESTIMATE_GAS:                     'eth_estimateGas',
+  GET_TOKEN_BY_CONTRACT:            'tokensupply',
+  GET_TOKEN_BALANCE_BY_CONTRACT:    'tokenbalance'
 }
