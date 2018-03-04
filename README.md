@@ -39,4 +39,4 @@ If you use Typescript, you can use the more detailed reference found in the [typ
 
 **The MIT License (MIT)**
 
-Copyright © 2018 Yago
+Copyright © 2018 Danakt Frost
