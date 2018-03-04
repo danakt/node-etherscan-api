@@ -147,20 +147,23 @@ export class EtherscanApi extends EtherscanRequest {
 
   /**
    * List of Blocks Mined by Address
-   * @param address Miner address
-   * @param offset Max records to return
-   * @param page Page number
+   * @param {string} address Miner address
+   * @param {'blocks'|'uncles'} type Type of block: blocks (full blocks only)
+   * or uncles (uncle blocks only)
+   * @param {number} offset Max records to return
+   * @param {number} page Page number
    * @return {Promise<BlockInfo[]>}
    */
   public async getMinedBlocks(
     address: string,
+    type: 'blocks' | 'uncles' = 'blocks',
     offset?: number,
     page?: number
   ): Promise<BlockInfo[]> {
     return this.createRequest({
       module:    MODULES.ACCOUNT,
       action:    ACTIONS.GET_MINED_BLOCKS,
-      blocktype: 'blocks',
+      blocktype: type,
       address,
       offset,
       page
