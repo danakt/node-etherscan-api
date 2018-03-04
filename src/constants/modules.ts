@@ -4,5 +4,6 @@ export const MODULES = {
   TRANSACTION: 'transaction',
   BLOCK:       'block',
   LOGS:        'logs',
-  PROXY:       'proxy'
+  PROXY:       'proxy',
+  STATS:       'stats'
 }
