@@ -572,4 +572,26 @@ export class EtherscanApi extends EtherscanRequest {
       tag
     })
   }
+
+  /**
+   * Get total supply of Ether
+   * @return {Promise<string>}
+   */
+  public async getTotalEtherSupply(): Promise<string> {
+    return this.createRequest({
+      module: MODULES.STATS,
+      action: ACTIONS.GET_TOTAL_ETHER_SUPPLY
+    })
+  }
+
+  /**
+   * Get Ether last price
+   * @return {Promise<EtherPrice>}
+   */
+  public async getEtherLastPrice(): Promise<EtherPrice> {
+    return this.createRequest({
+      module: MODULES.STATS,
+      action: ACTIONS.GET_LAST_ETHER_PRICE
+    })
+  }
 }
