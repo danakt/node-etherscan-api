@@ -2,10 +2,12 @@
   "name": "node-etherscan-api",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "jest --coverage",
-    "test:watch": "jest --watchAll --coverage"
+    "test:watch": "jest --watchAll --coverage",
+    "doc":
+      "jsdoc2md --files src/index.js --template doc/template.hbs > doc/API.md"
   },
   "typings": "./index.d.ts",
   "jest": {
@@ -22,8 +24,9 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "jest": "^22.4.2",
-    "eslint-plugin-standard": "^3.0.1"
+    "jsdoc-to-markdown": "^3.0.3"
   },
   "dependencies": {
     "bignumber.js": "^6.0.0",

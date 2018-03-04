@@ -256,18 +256,19 @@ type NETWORKS = {
  */
 declare class EtherscanApi {
   /**
+   * @class EtherscanApi
    * @constructor
-   * @param {string} [token="YourApiKeyToken"] Etherscan API token
-   * @param {string} [network="main"] Network name. Available: main, ropsten,
-   * kovan, rinkeby
+   * @param {string} [token] Etherscan API token
+   * @param {string} [networkName=MAIN] Network name. Available:
+   *  main, ropsten, kovan and rinkeby
    */
   constructor(token?: string, network?: keyof NETWORKS)
 
   /**
-   * Returns Ether Balance for a single Address
-   * @param address
-   * @param {string?} [unit="wei"] Balance unit
-   * @return {Promise<string>}
+   * Returns Ether balance for a single address
+   * @param {string} address Address
+   * @param {string} [unit=wei] Balance unit
+   * @returns {Promise<string>}
    */
   getAccountBalance(
     address: string,
@@ -276,11 +277,11 @@ declare class EtherscanApi {
   ): Promise<string>
 
   /**
-   * Get Ether Balance for multiple Addresses in a single call
-   * @description Up to a maximum of 20 accounts in a single batch
-   * @param {Array<string>} addresses
-   * @param {string?} [unit="wei"] Balance unit
-   *
+   * Returns Ether balance for multiple addresses in a single call.
+   * Up to a maximum of 20 accounts in a single batch.
+   * @param {Array<string>} addresses List of addresses
+   * @param {string} [unit=wei] Balance unit
+   * @returns {Promise<object>}
    */
   getAccountBalances(
     addresses: string[],
@@ -294,15 +295,15 @@ declare class EtherscanApi {
   >
 
   /**
-   * Get a list of 'Normal' Transactions By Address
+   * Get a list of 'Normal' transactions by address
    * Returns up to a maximum of the last 10000 transactions only
-   * @param address Contract address
-   * @param startBlock Starting block number to retrieve results
-   * @param endBlock Ending block number to retrieve results
-   * @param offset Max records to return
-   * @param page Page number
-   * @param sort Sort type (asc/desc)
-   * @return {Promise<TransactionDescription[]>}
+   * @param {string} address Contract address
+   * @param {string|number} startBlock Starting block number to retrieve results
+   * @param {string|number} endBlock Ending block number to retrieve results
+   * @param {number} offset Max records to return
+   * @param {number} page Page number
+   * @param {"asc"|"desc"} sort Sort type
+   * @returns {Promise<object[]>}
    */
   getTransactions(
     address: string,
@@ -316,13 +317,13 @@ declare class EtherscanApi {
   /**
    * Returns a list of 'Internal' Transactions by Address
    * Returns up to a maximum of the last 10000 transactions only
-   * @param address Contract address
-   * @param startBlock Starting block number to retrieve results
-   * @param endBlock Ending block number to retrieve results
-   * @param offset Max records to return
-   * @param page Page number
-   * @param sort Sort type (asc/desc)
-   * @return {Promise<TransactionDescription[]>}
+   * @param {string} address Contract address
+   * @param {string|number} startBlock Starting block number to retrieve results
+   * @param {string|number} endBlock Ending block number to retrieve results
+   * @param {string|number} offset Max records to return
+   * @param {string|number} page Page number
+   * @param {"asc"|"desc"} sort Sort type
+   * @returns {Promise<object[]>}
    */
   getInternalTransactions(
     address: string,
@@ -336,20 +337,20 @@ declare class EtherscanApi {
   /**
    * Returns a list of 'Internal' Transactions by Address
    * @param txhash Contract address
-   * @return {Promise<InternalTransactionDescription[]>}
+   * @returns {Promise<object[]>}
    */
   getInternalTransactionsByHash(
     txhash: string
   ): Promise<TransactionDescription[]>
 
   /**
-   * List of Blocks Mined by Address
+   * List of blocks mined by address
    * @param {string} address Miner address
-   * @param {'blocks'|'uncles'} type Type of block: blocks (full blocks only)
+   * @param {"blocks"|"uncles"} type Type of block: blocks (full blocks only)
    * or uncles (uncle blocks only)
    * @param {number} offset Max records to return
    * @param {number} page Page number
-   * @return {Promise<BlockInfo[]>}
+   * @returns {Promise<object[]>}
    */
   getMinedBlocks(
     address: string,
@@ -361,17 +362,16 @@ declare class EtherscanApi {
   /**
    * Returns Contract ABI
    * @param address
-   * @return {Promsie<AbiItemDescription[]>}
+   * @returns {Promsie<object[]>}
    */
   getContractAbi(address: string): Promise<AbiItemDescription[]>
 
   /**
    * Checks contract execution status (if there was an error during contract
-   * execution).
-   * @description "isError": "0" = Pass, "isError": "1" = Error during contract
+   * execution). "isError": "0" = Pass, "isError": "1" = Error during contract
    * execution
-   * @param txhash Contract address
-   * @return {Promise<object>}
+   * @param {string} txhash Contract address
+   * @returns {Promise<object>}
    */
   getContractExecutionStatus(
     txhash: string
@@ -382,11 +382,10 @@ declare class EtherscanApi {
 
   /**
    * Checks transaction receipt status (only applicable for post byzantium fork
-   * transactions).
-   * @description Status: 0 = Fail, 1 = Pass. Will return null/empty value
+   * transactions). Status: 0 = Fail, 1 = Pass. Will return null/empty value
    * for pre-byzantium fork
-   * @param txhash Transaction address
-   * @return {Promise<object>}
+   * @param {string} txhash Transaction address
+   * @returns {Promise<object>}
    */
   getTransactionStatus(
     txhash: string
@@ -401,27 +400,24 @@ declare class EtherscanApi {
   getBlockReward(blockNumber: number | string): Promise<BlockRewardInfo>
 
   /**
-   * Returns events logs
-   * @description The Event Log API was designed to provide an alternative to
-   * the native eth_getLogs. Topic Operator (opr) choices are either 'and' or
-   * 'or' and are restricted to the above choices only. For performance and
-   * security considerations, only the first 1000 results are return.
+   * Returns events logs.
+   * The Event Log API was designed to provide an alternative to the native
+   * eth_getLogs. Topic Operator (opr) choices are either 'and' or 'or' and
+   * are restricted to the above choices only. For performance and security
+   * considerations, only the first 1000 results are return.
    * @param {string} address
    * @param {number} fromBlock Start block number (integer, NOT hex)
    * @param {number|'latest'} toBlock End block number or "latest"
    * (earliest and pending is NOT supported yet)
    * @param {string} topic0 Topic 0
-   * @param {'and'|'or'?} topic01operator Operator (and|or) between topic0
-   * & topic1
-   * @param {string?} topic1 Topic 1
-   * @param {'and'|'or'?} topic12operator Operator (and|or) between topic1
-   * & topic2
-   * @param {string} topic2 Topic 2
-   * @param {'and'|'or'?} topic23operator Operator (and|or) between topic2
-   * & topic3
-   * @param {string?} topic3 Topic 3
-   * @param {'and'|'or'?} topic02operator Operator (and|or) between topic0
-   * & topic2
+   * @param {"and"|"or"} [topic01operator] Operator between topic0 & topic1
+   * @param {string} [topic1] Topic 1
+   * @param {"and"|"or"} [topic12operator] Operator between topic1 & topic2
+   * @param {string} [topic2] Topic 2
+   * @param {"and"|"or"} [topic23operator] Operator between topic2 & topic3
+   * @param {string} [topic3] Topic 3
+   * @param {"and"|"or"} [topic02operator] Operator between topic0 & topic2
+   * @return {Promise<object>}
    */
   getEventsLogs(
     address: string,
@@ -439,14 +435,14 @@ declare class EtherscanApi {
 
   /**
    * Returns the number of the most recent block
-   * @return {Promise<number>}
+   * @returns {Promise<number>}
    */
   getRecentBlockNumber(): Promise<number>
 
   /**
    * Returns information about a block by block number
    * @param {number} blockNumber Block number
-   * @return {Promise<GethBlockInfo>}
+   * @returns {Promise<object>}
    */
   getBlockByNumber(blockNumber: number): Promise<GethBlockInfo>
 
@@ -454,7 +450,7 @@ declare class EtherscanApi {
    * Returns information about a uncle by block number and index
    * @param {number} blockNumber
    * @param {number} [index=0]
-   * @return {Promise<GethBlockInfo>}
+   * @returns {Promise<object>}
    */
   getUncleByBlockNumberAndIndex(
     blockNumber: number,
@@ -465,14 +461,14 @@ declare class EtherscanApi {
    * Returns the number of transactions in a block from a block matching the
    * given block number
    * @param {number} blockNumber
-   * @return {Promise<number>}
+   * @returns {Promise<number>}
    */
   getBlockTransactionCount(blockNumber: number): Promise<number>
 
   /**
    * Returns the information about a transaction requested by transaction hash
    * @param {string} txhash Transaction hash
-   * @return {Promise<TransactionDescription>}
+   * @returns {Promise<object>}
    */
   getTransactionByHash(txhash: string): Promise<TransactionDescription>
 
@@ -481,7 +477,7 @@ declare class EtherscanApi {
    * index position
    * @param {number} blockNumber
    * @param {number} [index=0]
-   * @returns {Promise<TransactionDescription>}
+   * @returns {Promise<object>}
    */
   getTransactionByBlockNumberAndIndex(
     blockNumber: number,
@@ -505,7 +501,7 @@ declare class EtherscanApi {
   /**
    * Returns the receipt of a transaction by transaction hash
    * @param {string} txhash Transaction hash
-   * @returns {Promise<TransactionReceipt>}
+   * @returns {Promise<object>}
    */
   getTransactionReceipt(txhash: string): Promise<TransactionReceipt>
 
@@ -514,7 +510,7 @@ declare class EtherscanApi {
    * the block chain
    * @param {string} to Address to execute from
    * @param {string} data Data to transfer
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   call(to: string, data: string, tag?: string): Promise<string>
 
@@ -529,14 +525,14 @@ declare class EtherscanApi {
    * Returns the value from a storage position at a given address.
    * @param {string} address
    * @param {number} position
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   getStorageAt(address: string, position: number, tag?: string): Promise<string>
 
   /**
    * Returns the current price per gas (in wei by default)
-   * @param {string} [unit="wei"] Unit of gas
-   * @return {string}
+   * @param {string} [unit=wei] Unit of gas
+   * @returns {Promise<string>}
    */
   getGasPrice(unit?: keyof UNITS): Promise<string>
 
@@ -547,6 +543,7 @@ declare class EtherscanApi {
    * @param {string} value Storage position
    * @param {string} gasPrice Gas price in wei
    * @param {string} gas
+   * @returns {Promise<void>}
    */
   estimateGas(
     to: string,
@@ -556,16 +553,16 @@ declare class EtherscanApi {
   ): Promise<void>
 
   /**
-   * Get ERC20-Token TotalSupply by ContractAddress
+   * Returns ERC20-Token total supply by contract address
    * @param {string} contractAddress
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   getTokenByContractAddress(contractAddress: string): Promise<string>
 
   /**
-   * Get ERC20-Token Account Balance for TokenContractAddress
+   * Returns ERC20-Token account balance by token's contract address
    * @param {string} contractAddress
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   getTokenBalanceByContractAddress(
     contractAddress: string,
@@ -574,14 +571,14 @@ declare class EtherscanApi {
   ): Promise<string>
 
   /**
-   * Get total supply of Ether
-   * @return {Promise<string>}
+   * Returns total supply of Ether
+   * @returns {Promise<string>}
    */
   getTotalEtherSupply(): Promise<string>
 
   /**
-   * Get Ether last price
-   * @return {Promise<EtherPrice>}
+   * Returns Ether last price
+   * @returns {Promise<object>}
    */
   getEtherLastPrice(): Promise<EtherPrice>
 }
