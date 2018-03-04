@@ -88,8 +88,8 @@ export class EtherscanApi extends EtherscanRequest {
     sort?: 'asc' | 'desc'
   ): Promise<TransactionDescription[]> {
     return this.createRequest({
-      action:     MODULES.ACCOUNT,
-      module:     ACTIONS.GET_TRANSACTIONS_LIST,
+      module:     MODULES.ACCOUNT,
+      action:     ACTIONS.GET_TRANSACTIONS_LIST,
       address,
       endblock:   endBlock,
       startblock: startBlock,
@@ -119,8 +119,8 @@ export class EtherscanApi extends EtherscanRequest {
     sort?: 'asc' | 'desc'
   ): Promise<InternalTransactionDescription[]> {
     return this.createRequest({
-      action:     MODULES.ACCOUNT,
-      module:     ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
+      module:     MODULES.ACCOUNT,
+      action:     ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
       address,
       endblock:   endBlock,
       startblock: startBlock,
@@ -139,8 +139,8 @@ export class EtherscanApi extends EtherscanRequest {
     txhash: string
   ): Promise<TransactionDescription[]> {
     return this.createRequest({
-      action: MODULES.ACCOUNT,
-      module: ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
+      module: MODULES.ACCOUNT,
+      action: ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
       txhash
     })
   }
@@ -158,8 +158,8 @@ export class EtherscanApi extends EtherscanRequest {
     page?: number
   ): Promise<BlockInfo[]> {
     return this.createRequest({
-      action:    MODULES.ACCOUNT,
-      module:    ACTIONS.GET_MINED_BLOCKS,
+      module:    MODULES.ACCOUNT,
+      action:    ACTIONS.GET_MINED_BLOCKS,
       blocktype: 'blocks',
       address,
       offset,
