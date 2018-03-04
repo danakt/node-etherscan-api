@@ -583,5 +583,8 @@ declare class EtherscanApi {
   getEtherLastPrice(): Promise<EtherPrice>
 }
 
-export as namespace EtherscanApi
+declare namespace EtherscanApi {
+
+}
+
 export = EtherscanApi

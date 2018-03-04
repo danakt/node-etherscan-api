@@ -1,6 +1,6 @@
 {
   "name": "node-etherscan-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "doc":
       "jsdoc2md --files src/index.js --template doc/template.hbs > doc/API.md"
   },
-  "typings": "./index.d.ts",
+  "types": "index.d.ts",
   "jest": {
     "testMatch": ["<rootDir>/tests/**/*.js"]
   },
