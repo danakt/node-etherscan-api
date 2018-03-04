@@ -1,4 +1,4 @@
-const { serializeObject } = require('../../build/utils/serializeObject')
+const serializeObject = require('../../src/utils/serializeObject')
 
 test('Serialize object to props', () => {
   const str = serializeObject({

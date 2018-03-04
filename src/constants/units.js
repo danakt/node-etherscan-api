@@ -1,7 +1,7 @@
 /**
  * Ethereum units
  */
-export const UNITS = {
+module.exports = {
   wei:        '1',
   kwei:       '1000',
   Kwei:       '1000',

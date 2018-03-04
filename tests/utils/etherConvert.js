@@ -1,4 +1,4 @@
-const { etherConvert } = require('../../build/utils/etherConvert')
+const etherConvert = require('../../src/utils/etherConvert')
 
 describe('Ether units coverter', () => {
   test('Should work for big unit to small unit', function () {

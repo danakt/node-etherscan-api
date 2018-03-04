@@ -1,4 +1,4 @@
-const EtherscanAPI = require('../build')
+const EtherscanAPI = require('../src/EtherscanAPI')
 
 describe('Etherscan stats methods', () => {
   const e = new EtherscanAPI()
@@ -10,7 +10,6 @@ describe('Etherscan stats methods', () => {
 
   test('getEtherLastPrice', async () => {
     const data = await e.getEtherLastPrice()
-    console.log(data)
     expect(Object.keys(data)).toEqual([
       'ethbtc',
       'ethbtc_timestamp',

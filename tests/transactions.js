@@ -1,4 +1,4 @@
-const EtherscanAPI = require('../build')
+const EtherscanAPI = require('../src/EtherscanAPI')
 
 describe('Etherscan transactions methods', () => {
   const e = new EtherscanAPI()

@@ -3,6 +3,8 @@
  * @param {number} [num=0] Decimal number
  * @return {number} Hexadecimal number
  */
-export function getHex(num: number = 0): string {
+function getHex(num = 0) {
   return '0x' + num.toString(16)
 }
+
+module.exports = getHex

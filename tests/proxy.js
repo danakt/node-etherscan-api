@@ -1,4 +1,4 @@
-const EtherscanAPI = require('../build')
+const EtherscanAPI = require('../src/EtherscanAPI')
 
 /**
  * @todo Make test of methods:
