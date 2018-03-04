@@ -251,26 +251,30 @@ export class EtherscanApi extends EtherscanRequest {
    * @param {number|'latest'} toBlock End block number or "latest"
    * (earliest and pending is NOT supported yet)
    * @param {string} topic0 Topic 0
-   * @param {'and'|'or'} topic01operator Operator and|or between topic0 & topic1
-   * @param {string} topic1 Topic 1
-   * @param {'and'|'or'} topic12operator Operator and|or between topic1 & topic2
+   * @param {'and'|'or'?} topic01operator Operator (and|or) between topic0
+   * & topic1
+   * @param {string?} topic1 Topic 1
+   * @param {'and'|'or'?} topic12operator Operator (and|or) between topic1
+   * & topic2
    * @param {string} topic2 Topic 2
-   * @param {'and'|'or'} topic23operator Operator and|or between topic2 & topic3
-   * @param {string} topic3 Topic 3
-   * @param {'and'|'or'} topic02operator Operator and|or between topic0 & topic2
+   * @param {'and'|'or'?} topic23operator Operator (and|or) between topic2
+   * & topic3
+   * @param {string?} topic3 Topic 3
+   * @param {'and'|'or'?} topic02operator Operator (and|or) between topic0
+   * & topic2
    */
   public async getEventsLogs(
     address: string,
     fromBlock: number,
     toBlock: number | 'latest',
-    topic0: string,
-    topic01operator: 'and' | 'or',
-    topic1: string,
-    topic12operator: 'and' | 'or',
-    topic2: string,
-    topic23operator: 'and' | 'or',
-    topic3: string,
-    topic02operator: 'and' | 'or'
+    topic0?: string,
+    topic01operator?: 'and' | 'or',
+    topic1?: string,
+    topic12operator?: 'and' | 'or',
+    topic2?: string,
+    topic23operator?: 'and' | 'or',
+    topic3?: string,
+    topic02operator?: 'and' | 'or'
   ): Promise<EventDescription[]> {
     return this.createRequest({
       module:       MODULES.LOGS,
