@@ -1,8 +1,8 @@
 const EtherscanAPI = require('../build')
 
 test('Etherscan instance', () => {
-  const etherscan1 = new EtherscanAPI()
-  expect(etherscan1.token).toBe('YourApiKeyToken')
+  const etherscan1 = new EtherscanAPI('SomeToken')
+  expect(etherscan1.token).toBe('SomeToken')
   expect(etherscan1.network).toBe('MAIN')
   expect(etherscan1.host).toBe('https://api.etherscan.io')
 
