@@ -1,4 +1,4 @@
-const EtherscanAPI = require('../src/EtherscanAPI')
+const EtherscanAPI = require('../src')
 
 test('Etherscan instance', () => {
   const etherscan1 = new EtherscanAPI('SomeToken')
