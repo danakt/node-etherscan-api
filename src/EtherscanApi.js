@@ -11,7 +11,7 @@ class EtherscanApi extends EtherscanRequest {
    * Returns Ether Balance for a single Address
    * @method getAccountBalance
    * @param {string} address
-   * @param {string?} [unit="wei"] Balance unit
+   * @param {string?} [unit=wei] Balance unit
    * @returns {Promise<string>}
    */
   async getAccountBalance(address, unit = 'wei', tag = 'latest') {
@@ -33,7 +33,7 @@ class EtherscanApi extends EtherscanRequest {
    * @method getAccountBalances
    * @description Up to a maximum of 20 accounts in a single batch
    * @param {Array<string>} addresses
-   * @param {string?} [unit="wei"] Balance unit
+   * @param {string?} [unit=wei] Balance unit
    * @return {Promise<object>} Array of "{ account: string; balance: string }[]"
    */
   async getAccountBalances(addresses, unit = 'wei', tag = 'latest') {
@@ -450,7 +450,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns the current price per gas (in wei by default)
    * @method getGasPrice
-   * @param {string} [unit="wei"] Unit of gas
+   * @param {string} [unit=wei] Unit of gas
    * @returns {string}
    */
   async getGasPrice(unit = 'wei') {
