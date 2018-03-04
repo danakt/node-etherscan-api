@@ -1,4 +1,4 @@
-export const ACTIONS = {
+module.exports = {
   GET_BALANCE:                      'balance',
   GET_BALANCE_MULTI:                'balancemulti',
   GET_TRANSACTIONS_LIST:            'txlist',

@@ -1,4 +1,4 @@
-export const MODULES = {
+module.exports = {
   ACCOUNT:     'account',
   CONTRACT:    'contract',
   TRANSACTION: 'transaction',

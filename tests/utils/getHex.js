@@ -1,4 +1,4 @@
-const { getHex } = require('../../build/utils/getHex')
+const getHex = require('../../src/utils/getHex')
 
 test('Get hex from number', () => {
   expect(getHex()).toBe('0x0')
