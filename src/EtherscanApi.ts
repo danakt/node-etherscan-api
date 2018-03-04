@@ -538,4 +538,38 @@ export class EtherscanApi extends EtherscanRequest {
       gas
     })
   }
+
+  /**
+   * Get ERC20-Token TotalSupply by ContractAddress
+   * @param {string} contractAddress
+   * @return {Promise<string>}
+   */
+  public async getTokenByContractAddress(
+    contractAddress: string
+  ): Promise<string> {
+    return this.createRequest({
+      module:          MODULES.STATS,
+      action:          ACTIONS.GET_TOKEN_BY_CONTRACT,
+      contractaddress: contractAddress
+    })
+  }
+
+  /**
+   * Get ERC20-Token Account Balance for TokenContractAddress
+   * @param {string} contractAddress
+   * @return {Promise<string>}
+   */
+  public async getTokenBalanceByContractAddress(
+    contractAddress: string,
+    address: string,
+    tag: string = 'latest'
+  ): Promise<string> {
+    return this.createRequest({
+      module:          MODULES.ACCOUNT,
+      action:          ACTIONS.GET_TOKEN_BALANCE_BY_CONTRACT,
+      contractaddress: contractAddress,
+      address,
+      tag
+    })
+  }
 }
