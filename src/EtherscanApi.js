@@ -8,10 +8,10 @@ const EtherscanRequest = require('./EtherscanRequest')
 
 class EtherscanApi extends EtherscanRequest {
   /**
-   * Returns Ether Balance for a single Address
+   * Returns Ether balance for a single address
    * @method getAccountBalance
    * @param {string} address
-   * @param {string?} [unit=wei] Balance unit
+   * @param {string} [unit=wei] Balance unit
    * @returns {Promise<string>}
    */
   async getAccountBalance(address, unit = 'wei', tag = 'latest') {
@@ -29,11 +29,11 @@ class EtherscanApi extends EtherscanRequest {
   }
 
   /**
-   * Get Ether Balance for multiple Addresses in a single call
+   * Returns Ether balance for multiple addresses in a single call.
+   * Up to a maximum of 20 accounts in a single batch.
    * @method getAccountBalances
-   * @description Up to a maximum of 20 accounts in a single batch
    * @param {Array<string>} addresses
-   * @param {string?} [unit=wei] Balance unit
+   * @param {string} [unit=wei] Balance unit
    * @return {Promise<object>} Array of "{ account: string; balance: string }[]"
    */
   async getAccountBalances(addresses, unit = 'wei', tag = 'latest') {
@@ -56,7 +56,7 @@ class EtherscanApi extends EtherscanRequest {
   }
 
   /**
-   * Get a list of 'Normal' Transactions By Address
+   * Get a list of 'Normal' transactions by address
    * Returns up to a maximum of the last 10000 transactions only
    * @method getTransactions
    * @param {string} address Contract address
@@ -127,7 +127,7 @@ class EtherscanApi extends EtherscanRequest {
   }
 
   /**
-   * List of Blocks Mined by Address
+   * List of blocks mined by address
    * @method getMinedBlocks
    * @param {string} address Miner address
    * @param {'blocks'|'uncles'} type Type of block: blocks (full blocks only)
@@ -165,10 +165,9 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Checks contract execution status (if there was an error during contract
-   * execution).
-   * @method getContractExecutionStatus
-   * @description "isError": "0" = Pass, "isError": "1" = Error during contract
+   * execution). "isError": "0" = Pass, "isError": "1" = Error during contract
    * execution
+   * @method getContractExecutionStatus
    * @param {string} txhash Contract address
    * @returns {Promise<object>}
    */
@@ -184,10 +183,9 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Checks transaction receipt status (only applicable for post byzantium fork
-   * transactions).
-   * @method getTransactionStatus
-   * @description Status: 0 = Fail, 1 = Pass. Will return null/empty value
+   * transactions). Status: 0 = Fail, 1 = Pass. Will return null/empty value
    * for pre-byzantium fork
+   * @method getTransactionStatus
    * @param {string} txhash Transaction address
    * @returns {Promise<object>}
    */
@@ -213,24 +211,24 @@ class EtherscanApi extends EtherscanRequest {
   }
 
   /**
-   * Returns events logs
+   * Returns events logs.
+   * The Event Log API was designed to provide an alternative to the native
+   * eth_getLogs. Topic Operator (opr) choices are either '''and' or 'or' and
+   * are restricted to the above choices only. For performance and security
+   * considerations, only the first 1000 results are return.
    * @method getEventsLogs
-   * @description The Event Log API was designed to provide an alternative to
-   * the native eth_getLogs. Topic Operator (opr) choices are either '''and' or
-   * 'or' and are restricted to the above choices only. For performance and
-   * security considerations, only the first 1000 results are return.
    * @param {string} address
    * @param {number} fromBlock Start block number (integer, NOT hex)
    * @param {number|'latest'} toBlock End block number or "latest"
    * (earliest and pending is NOT supported yet)
    * @param {string} topic0 Topic 0
-   * @param {string?} topic01operator Operator (and|or) between topic0 & topic1
-   * @param {string?} topic1 Topic 1
-   * @param {string?} topic12operator Operator (and|or) between topic1 & topic2
-   * @param {string} topic2 Topic 2
-   * @param {string?} topic23operator Operator (and|or) between topic2 & topic3
-   * @param {string?} topic3 Topic 3
-   * @param {string?} topic02operator Operator (and|or) between topic0 & topic2
+   * @param {string} [topic01operator] Operator (and|or) between topic0 & topic1
+   * @param {string} [topic1] Topic 1
+   * @param {string} [topic12operator] Operator (and|or) between topic1 & topic2
+   * @param {string} [topic2] Topic 2
+   * @param {string} [topic23operator] Operator (and|or) between topic2 & topic3
+   * @param {string} [topic3] Topic 3
+   * @param {string} [topic02operator] Operator (and|or) between topic0 & topic2
    */
   async getEventsLogs(
     address,
@@ -492,7 +490,7 @@ class EtherscanApi extends EtherscanRequest {
   }
 
   /**
-   * Get ERC20-Token TotalSupply by ContractAddress
+   * Returns ERC20-Token total supply by contract address
    * @method getTokenByContractAddress
    * @param {string} contractAddress
    * @returns {Promise<string>}
@@ -506,7 +504,7 @@ class EtherscanApi extends EtherscanRequest {
   }
 
   /**
-   * Get ERC20-Token Account Balance for TokenContractAddress
+   * Returns ERC20-Token account balance by token's contract address
    * @method getTokenBalanceByContractAddress
    * @param {string} contractAddress
    * @returns {Promise<string>}
@@ -526,7 +524,7 @@ class EtherscanApi extends EtherscanRequest {
   }
 
   /**
-   * Get total supply of Ether
+   * Returns total supply of Ether
    * @method getTotalEtherSupply
    * @returns {Promise<string>}
    */
@@ -538,7 +536,7 @@ class EtherscanApi extends EtherscanRequest {
   }
 
   /**
-   * Get Ether last price
+   * Returns Ether last price
    * @method getEtherLastPrice
    * @returns {Promise<EtherPrice>}
    */
