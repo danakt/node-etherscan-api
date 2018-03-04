@@ -6,10 +6,18 @@ const etherConvert = require('./utils/etherConvert')
 const getHex = require('./utils/getHex')
 const EtherscanRequest = require('./EtherscanRequest')
 
-/**
- * The Etherscan API
- */
 class EtherscanApi extends EtherscanRequest {
+  /**
+   * @class EtherscanApi
+   * @constructor
+   * @param {string} [token] Etherscan API token
+   * @param {string} [network=MAIN] Network name. Available: main, ropsten,
+   * kovan, rinkeby
+   */
+  constructor(token = '', network = 'MAIN') {
+    super(token, network)
+  }
+
   /**
    * Returns Ether balance for a single address
    * @method getAccountBalance
