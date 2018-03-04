@@ -17,7 +17,7 @@ export class EtherscanRequest {
    * @param {string} [network="main"] Network name. Available: main, ropsten,
    * kovan, rinkeby
    */
-  protected constructor(token = 'YourApiKeyToken', network = 'MAIN') {
+  protected constructor(token = '', network = 'MAIN') {
     this.token = token
 
     const netName = network.toUpperCase()
