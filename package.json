@@ -7,10 +7,9 @@
     "test": "jest --coverage",
     "test:watch": "jest --watchAll --coverage"
   },
+  "typings": "./index.d.ts",
   "jest": {
-    "testMatch": [
-      "<rootDir>/tests/**/*.js"
-    ]
+    "testMatch": ["<rootDir>/tests/**/*.js"]
   },
   "author": "Danakt Frost",
   "license": "MIT",
