@@ -1,6 +1,6 @@
 {
   "name": "node-etherscan-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -13,6 +13,15 @@
   "jest": {
     "testMatch": ["<rootDir>/tests/**/*.js"]
   },
+  "keywords": [
+    "ethereum",
+    "etherscan",
+    "etherscan-api",
+    "api",
+    "nodejs",
+    "ether",
+    "blockchain"
+  ],
   "author": "Danakt Frost",
   "license": "MIT",
   "devDependencies": {
