@@ -11,7 +11,7 @@ class EtherscanApi extends EtherscanRequest {
    * Returns Ether Balance for a single Address
    * @param {string} address
    * @param {string?} [unit="wei"] Balance unit
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   async getAccountBalance(address, unit = 'wei', tag = 'latest') {
     const resp = await this.createRequest({
@@ -32,7 +32,7 @@ class EtherscanApi extends EtherscanRequest {
    * @description Up to a maximum of 20 accounts in a single batch
    * @param {Array<string>} addresses
    * @param {string?} [unit="wei"] Balance unit
-   *
+   * @return {Promise<object>} Array of "{ account: string; balance: string }[]"
    */
   async getAccountBalances(addresses, unit = 'wei', tag = 'latest') {
     const resp = await this.createRequest({
@@ -62,7 +62,7 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number} offset Max records to return
    * @param {number} page Page number
    * @param {number} sort Sort type (asc/desc)
-   * @return {Promise<TransactionDescription[]>}
+   * @returns {Promise<TransactionDescription[]>}
    */
   async getTransactions(address, startBlock, endBlock, offset, page, sort) {
     return this.createRequest({
@@ -86,7 +86,7 @@ class EtherscanApi extends EtherscanRequest {
    * @param {string|number} offset Max records to return
    * @param {string|number} page Page number
    * @param {'asc'|'desc'} sort Sort type (asc/desc)
-   * @return {Promise<TransactionDescription[]>}
+   * @returns {Promise<TransactionDescription[]>}
    */
   async getInternalTransactions(
     address,
@@ -111,7 +111,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns a list of 'Internal' Transactions by Address
    * @param txhash Contract address
-   * @return {Promise<InternalTransactionDescription[]>}
+   * @returns {Promise<InternalTransactionDescription[]>}
    */
   async getInternalTransactionsByHash(txhash) {
     return this.createRequest({
@@ -128,7 +128,7 @@ class EtherscanApi extends EtherscanRequest {
    * or uncles (uncle blocks only)
    * @param {number} offset Max records to return
    * @param {number} page Page number
-   * @return {Promise<BlockInfo[]>}
+   * @returns {Promise<BlockInfo[]>}
    */
   async getMinedBlocks(address, type = 'blocks', offset, page) {
     return this.createRequest({
@@ -144,7 +144,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns Contract ABI
    * @param address
-   * @return {Promsie<AbiItemDescription[]>}
+   * @returns {Promsie<AbiItemDescription[]>}
    */
   async getContractAbi(address) {
     const resp = await this.createRequest({
@@ -162,7 +162,7 @@ class EtherscanApi extends EtherscanRequest {
    * @description "isError": "0" = Pass, "isError": "1" = Error during contract
    * execution
    * @param {string} txhash Contract address
-   * @return {Promise<object>}
+   * @returns {Promise<object>}
    */
   async getContractExecutionStatus(txhash) {
     const resp = await this.createRequest({
@@ -180,7 +180,7 @@ class EtherscanApi extends EtherscanRequest {
    * @description Status: 0 = Fail, 1 = Pass. Will return null/empty value
    * for pre-byzantium fork
    * @param {string} txhash Transaction address
-   * @return {Promise<object>}
+   * @returns {Promise<object>}
    */
   async getTransactionStatus(txhash) {
     return this.createRequest({
@@ -205,7 +205,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns events logs
    * @description The Event Log API was designed to provide an alternative to
-   * the native eth_getLogs. Topic Operator (opr) choices are either 'and' or
+   * the native eth_getLogs. Topic Operator (opr) choices are either '''and' or
    * 'or' and are restricted to the above choices only. For performance and
    * security considerations, only the first 1000 results are return.
    * @param {string} address
@@ -213,17 +213,13 @@ class EtherscanApi extends EtherscanRequest {
    * @param {number|'latest'} toBlock End block number or "latest"
    * (earliest and pending is NOT supported yet)
    * @param {string} topic0 Topic 0
-   * @param {'and'|'or'?} topic01operator Operator (and|or) between topic0
-   * & topic1
+   * @param {string?} topic01operator Operator (and|or) between topic0 & topic1
    * @param {string?} topic1 Topic 1
-   * @param {'and'|'or'?} topic12operator Operator (and|or) between topic1
-   * & topic2
+   * @param {string?} topic12operator Operator (and|or) between topic1 & topic2
    * @param {string} topic2 Topic 2
-   * @param {'and'|'or'?} topic23operator Operator (and|or) between topic2
-   * & topic3
+   * @param {string?} topic23operator Operator (and|or) between topic2 & topic3
    * @param {string?} topic3 Topic 3
-   * @param {'and'|'or'?} topic02operator Operator (and|or) between topic0
-   * & topic2
+   * @param {string?} topic02operator Operator (and|or) between topic0 & topic2
    */
   async getEventsLogs(
     address,
@@ -256,7 +252,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Returns the number of the most recent block
-   * @return {Promise<number>}
+   * @returns {Promise<number>}
    */
   async getRecentBlockNumber() {
     const blockNumberHex = await this.createRequest({
@@ -270,7 +266,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns information about a block by block number
    * @param {number} blockNumber Block number
-   * @return {Promise<GethBlockInfo>}
+   * @returns {Promise<GethBlockInfo>}
    */
   async getBlockByNumber(blockNumber) {
     return this.createRequest({
@@ -285,7 +281,7 @@ class EtherscanApi extends EtherscanRequest {
    * Returns information about a uncle by block number and index
    * @param {number} blockNumber
    * @param {number} [index=0]
-   * @return {Promise<GethBlockInfo>}
+   * @returns {Promise<GethBlockInfo>}
    */
   async getUncleByBlockNumberAndIndex(blockNumber, index = 0) {
     return this.createRequest({
@@ -300,7 +296,7 @@ class EtherscanApi extends EtherscanRequest {
    * Returns the number of transactions in a block from a block matching the
    * given block number
    * @param {number} blockNumber
-   * @return {Promise<number>}
+   * @returns {Promise<number>}
    */
   async getBlockTransactionCount(blockNumber) {
     const countHex = await this.createRequest({
@@ -314,7 +310,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns the information about a transaction requested by transaction hash
    * @param {string} txhash Transaction hash
-   * @return {Promise<TransactionDescription>}
+   * @returns {Promise<TransactionDescription>}
    */
   async getTransactionByHash(txhash) {
     return this.createRequest({
@@ -386,7 +382,7 @@ class EtherscanApi extends EtherscanRequest {
    * the block chain
    * @param {string} to Address to execute from
    * @param {string} data Data to transfer
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   async call(to, data, tag = 'latest') {
     return this.createRequest({
@@ -416,7 +412,7 @@ class EtherscanApi extends EtherscanRequest {
    * Returns the value from a storage position at a given address.
    * @param {string} address
    * @param {number} position
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   async getStorageAt(address, position, tag = 'latest') {
     return this.createRequest({
@@ -431,7 +427,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Returns the current price per gas (in wei by default)
    * @param {string} [unit="wei"] Unit of gas
-   * @return {string}
+   * @returns {string}
    */
   async getGasPrice(unit = 'wei') {
     const priceHex = await this.createRequest({
@@ -473,7 +469,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Get ERC20-Token TotalSupply by ContractAddress
    * @param {string} contractAddress
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   async getTokenByContractAddress(contractAddress) {
     return this.createRequest({
@@ -486,7 +482,7 @@ class EtherscanApi extends EtherscanRequest {
   /**
    * Get ERC20-Token Account Balance for TokenContractAddress
    * @param {string} contractAddress
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   async getTokenBalanceByContractAddress(
     contractAddress,
@@ -504,7 +500,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Get total supply of Ether
-   * @return {Promise<string>}
+   * @returns {Promise<string>}
    */
   async getTotalEtherSupply() {
     return this.createRequest({
@@ -515,7 +511,7 @@ class EtherscanApi extends EtherscanRequest {
 
   /**
    * Get Ether last price
-   * @return {Promise<EtherPrice>}
+   * @returns {Promise<EtherPrice>}
    */
   async getEtherLastPrice() {
     return this.createRequest({
