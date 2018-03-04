@@ -27,13 +27,13 @@ EtherscanApi
     * [.getTransactionByHash(txhash)](#EtherscanApi+getTransactionByHash) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getTransactionByBlockNumberAndIndex(blockNumber, [index])](#EtherscanApi+getTransactionByBlockNumberAndIndex) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getTransactionCount(address)](#EtherscanApi+getTransactionCount) ⇒ <code>Promise.&lt;number&gt;</code>
-    * [.sendRawTransaction(hex)](#EtherscanApi+sendRawTransaction)
+    * [.sendRawTransaction(hex)](#EtherscanApi+sendRawTransaction) ⇒ <code>Promise.&lt;void&gt;</code>
     * [.getTransactionReceipt(txhash)](#EtherscanApi+getTransactionReceipt) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.call(to, data)](#EtherscanApi+call) ⇒ <code>Promise.&lt;string&gt;</code>
     * [.getCode(address)](#EtherscanApi+getCode) ⇒ <code>Promise.&lt;string&gt;</code>
     * [.getStorageAt(address, position)](#EtherscanApi+getStorageAt) ⇒ <code>Promise.&lt;string&gt;</code>
-    * [.getGasPrice([unit])](#EtherscanApi+getGasPrice) ⇒ <code>string</code>
-    * [.estimateGas(to, value, gasPrice, gas)](#EtherscanApi+estimateGas)
+    * [.getGasPrice([unit])](#EtherscanApi+getGasPrice) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.estimateGas(to, value, gasPrice, gas)](#EtherscanApi+estimateGas) ⇒ <code>Promise.&lt;void&gt;</code>
     * [.getTokenByContractAddress(contractAddress)](#EtherscanApi+getTokenByContractAddress) ⇒ <code>Promise.&lt;string&gt;</code>
     * [.getTokenBalanceByContractAddress(contractAddress)](#EtherscanApi+getTokenBalanceByContractAddress) ⇒ <code>Promise.&lt;string&gt;</code>
     * [.getTotalEtherSupply()](#EtherscanApi+getTotalEtherSupply) ⇒ <code>Promise.&lt;string&gt;</code>
@@ -283,7 +283,7 @@ Returns the number of transactions sent from an address
 
 <a name="EtherscanApi+sendRawTransaction"></a>
 
-### etherscanApi.sendRawTransaction(hex)
+### etherscanApi.sendRawTransaction(hex) ⇒ <code>Promise.&lt;void&gt;</code>
 Creates new message call transaction or a contract creation for signed
 transactions
 
@@ -342,7 +342,7 @@ Returns the value from a storage position at a given address.
 
 <a name="EtherscanApi+getGasPrice"></a>
 
-### etherscanApi.getGasPrice([unit]) ⇒ <code>string</code>
+### etherscanApi.getGasPrice([unit]) ⇒ <code>Promise.&lt;string&gt;</code>
 Returns the current price per gas (in wei by default)
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
@@ -353,7 +353,7 @@ Returns the current price per gas (in wei by default)
 
 <a name="EtherscanApi+estimateGas"></a>
 
-### etherscanApi.estimateGas(to, value, gasPrice, gas)
+### etherscanApi.estimateGas(to, value, gasPrice, gas) ⇒ <code>Promise.&lt;void&gt;</code>
 Makes a call or transaction, which won't be added to the blockchain and
 returns the used gas, which can be used for estimating the used gas
 

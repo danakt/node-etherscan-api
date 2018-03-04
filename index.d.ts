@@ -532,7 +532,7 @@ declare class EtherscanApi {
   /**
    * Returns the current price per gas (in wei by default)
    * @param {string} [unit=wei] Unit of gas
-   * @returns {string}
+   * @returns {Promise<string>}
    */
   getGasPrice(unit?: keyof UNITS): Promise<string>
 
@@ -543,6 +543,7 @@ declare class EtherscanApi {
    * @param {string} value Storage position
    * @param {string} gasPrice Gas price in wei
    * @param {string} gas
+   * @returns {Promise<void>}
    */
   estimateGas(
     to: string,

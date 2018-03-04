@@ -378,6 +378,7 @@ class EtherscanApi {
    * Creates new message call transaction or a contract creation for signed
    * transactions
    * @param {string} hex Raw hex encoded transaction that you want to send
+   * @return {Promise<void>}
    */
   sendRawTransaction(hex) {
     this._createRequest({
@@ -450,7 +451,7 @@ class EtherscanApi {
   /**
    * Returns the current price per gas (in wei by default)
    * @param {string} [unit=wei] Unit of gas
-   * @returns {string}
+   * @returns {Promise<string>}
    */
   getGasPrice(unit = 'wei') {
     return this._createRequest({
@@ -477,6 +478,7 @@ class EtherscanApi {
    * @param {string} value Storage position
    * @param {string} gasPrice Gas price in wei
    * @param {string} gas
+   * @return {Promise<void>}
    */
   estimateGas(to, value, gasPrice, gas) {
     this._createRequest({
