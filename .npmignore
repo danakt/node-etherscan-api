@@ -2,3 +2,5 @@ tests/
 docs/
 yarn.lock/
 .travis.yml
+.vscode/
+coverage/
