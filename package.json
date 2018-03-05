@@ -1,6 +1,6 @@
 {
   "name": "node-etherscan-api",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Etherscan API for Node.js",
   "main": "./src/index.js",
   "scripts": {
