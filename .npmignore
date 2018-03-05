@@ -1,0 +1,4 @@
+tests/
+docs/
+yarn.lock/
+.travis.yml
