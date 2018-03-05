@@ -13,8 +13,11 @@ async function createRequest(host, params) {
   const resp = await request(url)
   const data = JSON.parse(resp)
 
-  if (data.error) {
-    const message = data.error.message ? data.error.message : data.error
+  if (data.error || data.result === null) {
+    const message = data.message
+      ? data.message
+      : (data.error && data.error.message) || data.error
+
     throw new Error(message)
   }
 
