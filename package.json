@@ -1,6 +1,6 @@
 {
   "name": "node-etherscan-api",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Etherscan API for Node.js",
   "main": "./src/index.js",
   "scripts": {
@@ -40,5 +40,13 @@
   "dependencies": {
     "bignumber.js": "^6.0.0",
     "request-promise": "^4.2.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danakt/unode-etherscan-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/danakt/unode-etherscan-api/issues"
+  },
+  "homepage": "https://github.com/danakt/unode-etherscan-api"
 }
