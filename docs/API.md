@@ -9,33 +9,33 @@ EtherscanApi
 
 * [EtherscanApi](#EtherscanApi)
     * [new EtherscanApi([token], [networkName])](#new_EtherscanApi_new)
-    * [.getAccountBalance(address, [unit])](#EtherscanApi+getAccountBalance) ⇒ <code>Promise.&lt;string&gt;</code>
-    * [.getAccountBalances(addresses, [unit])](#EtherscanApi+getAccountBalances) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getTransactions(address, startBlock, endBlock, offset, page, sort)](#EtherscanApi+getTransactions) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
-    * [.getInternalTransactions(address, startBlock, endBlock, offset, page, sort)](#EtherscanApi+getInternalTransactions) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
+    * [.getAccountBalance(address, [options])](#EtherscanApi+getAccountBalance) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.getAccountBalances(addresses, [options])](#EtherscanApi+getAccountBalances) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getTransactions(address, [options])](#EtherscanApi+getTransactions) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
+    * [.getInternalTransactions(address, [options])](#EtherscanApi+getInternalTransactions) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
     * [.getInternalTransactionsByHash(txhash)](#EtherscanApi+getInternalTransactionsByHash) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
-    * [.getMinedBlocks(address, type, offset, page)](#EtherscanApi+getMinedBlocks) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
+    * [.getMinedBlocks(address, [options])](#EtherscanApi+getMinedBlocks) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
     * [.getContractAbi(address)](#EtherscanApi+getContractAbi) ⇒ <code>Promsie.&lt;Array.&lt;object&gt;&gt;</code>
     * [.getContractExecutionStatus(txhash)](#EtherscanApi+getContractExecutionStatus) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getTransactionStatus(txhash)](#EtherscanApi+getTransactionStatus) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getBlockReward(blockNumber)](#EtherscanApi+getBlockReward)
-    * [.getEventsLogs(address, fromBlock, toBlock, topic0, [topic01operator], [topic1], [topic12operator], [topic2], [topic23operator], [topic3], [topic02operator])](#EtherscanApi+getEventsLogs) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getEventsLogs(address, options)](#EtherscanApi+getEventsLogs) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getRecentBlockNumber()](#EtherscanApi+getRecentBlockNumber) ⇒ <code>Promise.&lt;number&gt;</code>
     * [.getBlockByNumber(blockNumber)](#EtherscanApi+getBlockByNumber) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getUncleByBlockNumberAndIndex(blockNumber, [index])](#EtherscanApi+getUncleByBlockNumberAndIndex) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getBlockTransactionCount(blockNumber)](#EtherscanApi+getBlockTransactionCount) ⇒ <code>Promise.&lt;number&gt;</code>
     * [.getTransactionByHash(txhash)](#EtherscanApi+getTransactionByHash) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getTransactionByBlockNumberAndIndex(blockNumber, [index])](#EtherscanApi+getTransactionByBlockNumberAndIndex) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getTransactionCount(address)](#EtherscanApi+getTransactionCount) ⇒ <code>Promise.&lt;number&gt;</code>
+    * [.getTransactionCount(address, [options])](#EtherscanApi+getTransactionCount) ⇒ <code>Promise.&lt;number&gt;</code>
     * [.sendRawTransaction(hex)](#EtherscanApi+sendRawTransaction) ⇒ <code>Promise.&lt;void&gt;</code>
     * [.getTransactionReceipt(txhash)](#EtherscanApi+getTransactionReceipt) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.call(to, data)](#EtherscanApi+call) ⇒ <code>Promise.&lt;string&gt;</code>
-    * [.getCode(address)](#EtherscanApi+getCode) ⇒ <code>Promise.&lt;string&gt;</code>
-    * [.getStorageAt(address, position)](#EtherscanApi+getStorageAt) ⇒ <code>Promise.&lt;string&gt;</code>
-    * [.getGasPrice([unit])](#EtherscanApi+getGasPrice) ⇒ <code>Promise.&lt;string&gt;</code>
-    * [.estimateGas(to, value, gasPrice, gas)](#EtherscanApi+estimateGas) ⇒ <code>Promise.&lt;void&gt;</code>
+    * [.call(to, data, [options])](#EtherscanApi+call) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.getCode(address, [options])](#EtherscanApi+getCode) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.getStorageAt(address, position, options)](#EtherscanApi+getStorageAt) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.getGasPrice([options])](#EtherscanApi+getGasPrice) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.estimateGas(toAddress, options)](#EtherscanApi+estimateGas) ⇒ <code>Promise.&lt;void&gt;</code>
     * [.getTokenByContractAddress(contractAddress)](#EtherscanApi+getTokenByContractAddress) ⇒ <code>Promise.&lt;string&gt;</code>
-    * [.getTokenBalanceByContractAddress(contractAddress)](#EtherscanApi+getTokenBalanceByContractAddress) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.getTokenBalanceByContractAddress(contractAddress, address, [options])](#EtherscanApi+getTokenBalanceByContractAddress) ⇒ <code>Promise.&lt;string&gt;</code>
     * [.getTotalEtherSupply()](#EtherscanApi+getTotalEtherSupply) ⇒ <code>Promise.&lt;string&gt;</code>
     * [.getEtherLastPrice()](#EtherscanApi+getEtherLastPrice) ⇒ <code>Promise.&lt;object&gt;</code>
 
@@ -50,62 +50,76 @@ EtherscanApi
 
 <a name="EtherscanApi+getAccountBalance"></a>
 
-### etherscanApi.getAccountBalance(address, [unit]) ⇒ <code>Promise.&lt;string&gt;</code>
+### etherscanApi.getAccountBalance(address, [options]) ⇒ <code>Promise.&lt;string&gt;</code>
 Returns Ether balance for a single address
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
+**Todo**
+
+- [ ] Write test for options
+
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | address | <code>string</code> |  | Address |
-| [unit] | <code>string</code> | <code>&quot;wei&quot;</code> | Balance unit |
+| [options] | <code>object</code> |  |  |
+| [options.unit] | <code>string</code> | <code>&quot;wei&quot;</code> | Balance unit |
+| [options.tag] | <code>string</code> | <code>&quot;latest&quot;</code> |  |
 
 <a name="EtherscanApi+getAccountBalances"></a>
 
-### etherscanApi.getAccountBalances(addresses, [unit]) ⇒ <code>Promise.&lt;object&gt;</code>
+### etherscanApi.getAccountBalances(addresses, [options]) ⇒ <code>Promise.&lt;object&gt;</code>
 Returns Ether balance for multiple addresses in a single call.
 Up to a maximum of 20 accounts in a single batch.
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
+**Todo**
+
+- [ ] Write test for options
+
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | addresses | <code>Array.&lt;string&gt;</code> |  | List of addresses |
-| [unit] | <code>string</code> | <code>&quot;wei&quot;</code> | Balance unit |
+| [options] | <code>object</code> |  |  |
+| [options.unit] | <code>string</code> | <code>&quot;wei&quot;</code> | Balance unit |
+| [options.tag] | <code>string</code> | <code>&quot;latest&quot;</code> |  |
 
 <a name="EtherscanApi+getTransactions"></a>
 
-### etherscanApi.getTransactions(address, startBlock, endBlock, offset, page, sort) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
-Get a list of 'Normal' transactions by address
-Returns up to a maximum of the last 10000 transactions only
+### etherscanApi.getTransactions(address, [options]) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
+Returns a list of 'Normal' transactions by address.
+Returns up to a maximum of the last 10000 transactions only.
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | address | <code>string</code> | Contract address |
-| startBlock | <code>string</code> \| <code>number</code> | Starting block number to retrieve results |
-| endBlock | <code>string</code> \| <code>number</code> | Ending block number to retrieve results |
-| offset | <code>number</code> | Max records to return |
-| page | <code>number</code> | Page number |
-| sort | <code>&quot;asc&quot;</code> \| <code>&quot;desc&quot;</code> | Sort type |
+| [options] | <code>object</code> |  |
+| [options.startBlock] | <code>object</code> | Starting block number to retrieve results |
+| [options.endBlock] | <code>string</code> \| <code>number</code> | Ending block number to retrieve results |
+| [options.offset] | <code>number</code> | Max records to return |
+| [options.page] | <code>number</code> | Page number |
+| [options.sort] | <code>&quot;asc&quot;</code> \| <code>&quot;desc&quot;</code> | Sort type |
 
 <a name="EtherscanApi+getInternalTransactions"></a>
 
-### etherscanApi.getInternalTransactions(address, startBlock, endBlock, offset, page, sort) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
-Returns a list of 'Internal' Transactions by Address
-Returns up to a maximum of the last 10000 transactions only
+### etherscanApi.getInternalTransactions(address, [options]) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
+Returns a list of 'Internal' Transactions by Address.
+Returns up to a maximum of the last 10000 transactions only.
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | address | <code>string</code> | Contract address |
-| startBlock | <code>string</code> \| <code>number</code> | Starting block number to retrieve results |
-| endBlock | <code>string</code> \| <code>number</code> | Ending block number to retrieve results |
-| offset | <code>string</code> \| <code>number</code> | Max records to return |
-| page | <code>string</code> \| <code>number</code> | Page number |
-| sort | <code>&quot;asc&quot;</code> \| <code>&quot;desc&quot;</code> | Sort type |
+| [options] | <code>object</code> |  |
+| [options.startBlock] | <code>string</code> \| <code>number</code> | Starting block number to retrieve results |
+| [options.endBlock] | <code>string</code> \| <code>number</code> | Ending block number to retrieve results |
+| [options.offset] | <code>string</code> \| <code>number</code> | Max records to return |
+| [options.page] | <code>string</code> \| <code>number</code> | Page number |
+| [options.sort] | <code>&quot;asc&quot;</code> \| <code>&quot;desc&quot;</code> | Sort type |
 
 <a name="EtherscanApi+getInternalTransactionsByHash"></a>
 
@@ -120,17 +134,18 @@ Returns a list of 'Internal' Transactions by Address
 
 <a name="EtherscanApi+getMinedBlocks"></a>
 
-### etherscanApi.getMinedBlocks(address, type, offset, page) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
+### etherscanApi.getMinedBlocks(address, [options]) ⇒ <code>Promise.&lt;Array.&lt;object&gt;&gt;</code>
 List of blocks mined by address
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| address | <code>string</code> |  | Miner address |
-| type | <code>&quot;blocks&quot;</code> \| <code>&quot;uncles&quot;</code> | <code>blocks</code> | Type of block: blocks (full blocks only) or uncles (uncle blocks only) |
-| offset | <code>number</code> |  | Max records to return |
-| page | <code>number</code> |  | Page number |
+| Param | Type | Description |
+| --- | --- | --- |
+| address | <code>string</code> | Miner address |
+| [options] | <code>object</code> |  |
+| [options.type] | <code>&quot;blocks&quot;</code> \| <code>&quot;uncles&quot;</code> | Type of block: blocks (full blocks only) or uncles (uncle blocks only) |
+| [options.offset] | <code>number</code> | Max records to return |
+| [options.page] | <code>number</code> | Page number |
 
 <a name="EtherscanApi+getContractAbi"></a>
 
@@ -182,11 +197,11 @@ Get block and uncle rewards by block number
 
 <a name="EtherscanApi+getEventsLogs"></a>
 
-### etherscanApi.getEventsLogs(address, fromBlock, toBlock, topic0, [topic01operator], [topic1], [topic12operator], [topic2], [topic23operator], [topic3], [topic02operator]) ⇒ <code>Promise.&lt;object&gt;</code>
+### etherscanApi.getEventsLogs(address, options) ⇒ <code>Promise.&lt;object&gt;</code>
 Returns events logs.
 The Event Log API was designed to provide an alternative to the native
-eth_getLogs. Topic Operator (opr) choices are either 'and' or 'or' and
-are restricted to the above choices only. For performance and security
+eth_getLogs. Topic Operator choices are either 'and' or 'or' and are
+restricted to the above choices only. For performance and security
 considerations, only the first 1000 results are return.
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
@@ -194,16 +209,17 @@ considerations, only the first 1000 results are return.
 | Param | Type | Description |
 | --- | --- | --- |
 | address | <code>string</code> |  |
-| fromBlock | <code>number</code> | Start block number (integer, NOT hex) |
-| toBlock | <code>number</code> \| <code>&#x27;latest&#x27;</code> | End block number or "latest" (earliest and pending is NOT supported yet) |
-| topic0 | <code>string</code> | Topic 0 |
-| [topic01operator] | <code>&quot;and&quot;</code> \| <code>&quot;or&quot;</code> | Operator between topic0 & topic1 |
-| [topic1] | <code>string</code> | Topic 1 |
-| [topic12operator] | <code>&quot;and&quot;</code> \| <code>&quot;or&quot;</code> | Operator between topic1 & topic2 |
-| [topic2] | <code>string</code> | Topic 2 |
-| [topic23operator] | <code>&quot;and&quot;</code> \| <code>&quot;or&quot;</code> | Operator between topic2 & topic3 |
-| [topic3] | <code>string</code> | Topic 3 |
-| [topic02operator] | <code>&quot;and&quot;</code> \| <code>&quot;or&quot;</code> | Operator between topic0 & topic2 |
+| options | <code>object</code> |  |
+| options.fromBlock | <code>number</code> | Start block number (integer, NOT hex) |
+| options.toBlock | <code>number</code> \| <code>&#x27;latest&#x27;</code> | End block number or "latest" (earliest and pending is NOT supported yet) |
+| options.topic0 | <code>string</code> | Topic 0 |
+| [options.topic01operator] | <code>&quot;and&quot;</code> \| <code>&quot;or&quot;</code> | Operator between topic0 & topic1 |
+| [options.topic1] | <code>string</code> | Topic 1 |
+| [options.topic12operator] | <code>&quot;and&quot;</code> \| <code>&quot;or&quot;</code> | Operator between topic1 & topic2 |
+| [options.topic2] | <code>string</code> | Topic 2 |
+| [options.topic23operator] | <code>&quot;and&quot;</code> \| <code>&quot;or&quot;</code> | Operator between topic2 & topic3 |
+| [options.topic3] | <code>string</code> | Topic 3 |
+| [options.topic02operator] | <code>&quot;and&quot;</code> \| <code>&quot;or&quot;</code> | Operator between topic0 & topic2 |
 
 <a name="EtherscanApi+getRecentBlockNumber"></a>
 
@@ -272,14 +288,16 @@ index position
 
 <a name="EtherscanApi+getTransactionCount"></a>
 
-### etherscanApi.getTransactionCount(address) ⇒ <code>Promise.&lt;number&gt;</code>
+### etherscanApi.getTransactionCount(address, [options]) ⇒ <code>Promise.&lt;number&gt;</code>
 Returns the number of transactions sent from an address
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| address | <code>string</code> | Transaction address |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| address | <code>string</code> |  | Transaction address |
+| [options] | <code>object</code> |  |  |
+| [options.tag] | <code>string</code> | <code>&quot;latest&quot;</code> |  |
 
 <a name="EtherscanApi+sendRawTransaction"></a>
 
@@ -306,54 +324,61 @@ Returns the receipt of a transaction by transaction hash
 
 <a name="EtherscanApi+call"></a>
 
-### etherscanApi.call(to, data) ⇒ <code>Promise.&lt;string&gt;</code>
+### etherscanApi.call(to, data, [options]) ⇒ <code>Promise.&lt;string&gt;</code>
 Executes a new message call immediately without creating a transaction on
 the block chain
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| to | <code>string</code> | Address to execute from |
-| data | <code>string</code> | Data to transfer |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| to | <code>string</code> |  | Address to execute from |
+| data | <code>string</code> |  | Data to transfer |
+| [options] | <code>object</code> |  |  |
+| [options.tag] | <code>string</code> | <code>&quot;latest&quot;</code> |  |
 
 <a name="EtherscanApi+getCode"></a>
 
-### etherscanApi.getCode(address) ⇒ <code>Promise.&lt;string&gt;</code>
+### etherscanApi.getCode(address, [options]) ⇒ <code>Promise.&lt;string&gt;</code>
 Returns code at a given address
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
-| Param | Type |
-| --- | --- |
-| address | <code>string</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| address | <code>string</code> |  | 
+| [options] | <code>object</code> |  | 
+| [options.tag] | <code>string</code> | <code>&quot;latest&quot;</code> | 
 
 <a name="EtherscanApi+getStorageAt"></a>
 
-### etherscanApi.getStorageAt(address, position) ⇒ <code>Promise.&lt;string&gt;</code>
+### etherscanApi.getStorageAt(address, position, options) ⇒ <code>Promise.&lt;string&gt;</code>
 Returns the value from a storage position at a given address.
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
-| Param | Type |
-| --- | --- |
-| address | <code>string</code> | 
-| position | <code>number</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| address | <code>string</code> |  | 
+| position | <code>number</code> |  | 
+| options | <code>object</code> |  | 
+| [options.tag] | <code>string</code> | <code>&quot;latest&quot;</code> | 
 
 <a name="EtherscanApi+getGasPrice"></a>
 
-### etherscanApi.getGasPrice([unit]) ⇒ <code>Promise.&lt;string&gt;</code>
+### etherscanApi.getGasPrice([options]) ⇒ <code>Promise.&lt;string&gt;</code>
 Returns the current price per gas (in wei by default)
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [unit] | <code>string</code> | <code>&quot;wei&quot;</code> | Unit of gas |
+| [options] | <code>object</code> |  |  |
+| [options.unit] | <code>string</code> | <code>&quot;wei&quot;</code> | Unit of gas |
 
 <a name="EtherscanApi+estimateGas"></a>
 
-### etherscanApi.estimateGas(to, value, gasPrice, gas) ⇒ <code>Promise.&lt;void&gt;</code>
+### etherscanApi.estimateGas(toAddress, options) ⇒ <code>Promise.&lt;void&gt;</code>
 Makes a call or transaction, which won't be added to the blockchain and
 returns the used gas, which can be used for estimating the used gas
 
@@ -361,10 +386,11 @@ returns the used gas, which can be used for estimating the used gas
 
 | Param | Type | Description |
 | --- | --- | --- |
-| to | <code>string</code> | Address to get code from |
-| value | <code>string</code> | Storage position |
-| gasPrice | <code>string</code> | Gas price in wei |
-| gas | <code>string</code> |  |
+| toAddress | <code>string</code> | Address to get code from |
+| options | <code>object</code> |  |
+| options.value | <code>string</code> | Storage position |
+| options.gasPrice | <code>string</code> | Gas price in wei |
+| options.gas | <code>string</code> |  |
 
 <a name="EtherscanApi+getTokenByContractAddress"></a>
 
@@ -379,14 +405,17 @@ Returns ERC20-Token total supply by contract address
 
 <a name="EtherscanApi+getTokenBalanceByContractAddress"></a>
 
-### etherscanApi.getTokenBalanceByContractAddress(contractAddress) ⇒ <code>Promise.&lt;string&gt;</code>
+### etherscanApi.getTokenBalanceByContractAddress(contractAddress, address, [options]) ⇒ <code>Promise.&lt;string&gt;</code>
 Returns ERC20-Token account balance by token's contract address
 
 **Kind**: instance method of [<code>EtherscanApi</code>](#EtherscanApi)  
 
-| Param | Type |
-| --- | --- |
-| contractAddress | <code>string</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| contractAddress | <code>string</code> |  | 
+| address | <code>string</code> |  | 
+| [options] | <code>object</code> |  | 
+| [options.tag] | <code>object</code> | <code>latest</code> | 
 
 <a name="EtherscanApi+getTotalEtherSupply"></a>
 

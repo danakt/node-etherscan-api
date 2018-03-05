@@ -7,7 +7,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watchAll --coverage",
     "doc":
-      "jsdoc2md --files src/index.js --template doc/template.hbs > doc/API.md"
+      "jsdoc2md --files src/index.js --template docs/template.hbs > docs/API.md"
   },
   "types": "index.d.ts",
   "jest": {
