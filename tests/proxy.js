@@ -154,7 +154,7 @@ describe('Etherscan geth/parity proxy  methods', () => {
   test('getStorageAt', async () => {
     const data = await e.getStorageAt(
       '0x6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd',
-      0
+      { position: 0 }
     )
     expect(data).toBe(
       '0x0000000000000000000000003d0768da09ce77d25e2d998e6a7b6ed4b9116c2d'

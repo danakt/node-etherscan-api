@@ -40,10 +40,15 @@ class EtherscanApi {
   /**
    * Returns Ether balance for a single address
    * @param {string} address Address
-   * @param {string} [unit=wei] Balance unit
+   * @param {object} [options]
+   * @param {string} [options.unit=wei] Balance unit
+   * @param {string} [options.tag=latest]
    * @returns {Promise<string>}
+   * @todo Write test for options
    */
-  getAccountBalance(address, unit = 'wei', tag = 'latest') {
+  getAccountBalance(address, options = {}) {
+    const { unit = 'wei', tag = 'latest' } = options
+
     return this._createRequest({
       module: MODULES.ACCOUNT,
       action: ACTIONS.GET_BALANCE,
@@ -61,15 +66,20 @@ class EtherscanApi {
    * Returns Ether balance for multiple addresses in a single call.
    * Up to a maximum of 20 accounts in a single batch.
    * @param {Array<string>} addresses List of addresses
-   * @param {string} [unit=wei] Balance unit
+   * @param {object} [options]
+   * @param {string} [options.unit=wei] Balance unit
+   * @param {string} [options.tag=latest]
    * @return {Promise<object>}
+   * @todo Write test for options
    */
-  getAccountBalances(addresses, unit = 'wei', tag = 'latest') {
+  getAccountBalances(addresses, options = {}) {
+    const { unit = 'wei', tag = 'latest' } = options
+
     return this._createRequest({
       apikey:  this.token,
       module:  MODULES.ACCOUNT,
       action:  ACTIONS.GET_BALANCE_MULTI,
-      address: addresses.join(','),
+      address: (addresses || []).join(','),
       tag
     }).then(resp => {
       // Converting balances to another unit
@@ -85,50 +95,60 @@ class EtherscanApi {
   }
 
   /**
-   * Get a list of 'Normal' transactions by address
-   * Returns up to a maximum of the last 10000 transactions only
+   * Returns a list of 'Normal' transactions by address.
+   * Returns up to a maximum of the last 10000 transactions only.
    * @param {string} address Contract address
-   * @param {string|number} startBlock Starting block number to retrieve results
-   * @param {string|number} endBlock Ending block number to retrieve results
-   * @param {number} offset Max records to return
-   * @param {number} page Page number
-   * @param {"asc"|"desc"} sort Sort type
+   * @param {object} [options]
+   * @param {object} [options.startBlock] Starting block number to retrieve
+   * results
+   * @param {string|number} [options.endBlock] Ending block number to retrieve
+   * results
+   * @param {number} [options.offset] Max records to return
+   * @param {number} [options.page] Page number
+   * @param {"asc"|"desc"} [options.sort] Sort type
    * @returns {Promise<object[]>}
    */
-  getTransactions(address, startBlock, endBlock, offset, page, sort) {
+  getTransactions(address, options = {}) {
+    const { startBlock, endBlock, offset, page, sort } = options
+
     return this._createRequest({
       module:     MODULES.ACCOUNT,
       action:     ACTIONS.GET_TRANSACTIONS_LIST,
       address,
-      endblock:   endBlock,
       startblock: startBlock,
-      offset,
-      page,
-      sort
+      endblock:   endBlock,
+      offset:     offset,
+      page:       page,
+      sort:       sort
     })
   }
 
   /**
-   * Returns a list of 'Internal' Transactions by Address
-   * Returns up to a maximum of the last 10000 transactions only
+   * Returns a list of 'Internal' Transactions by Address.
+   * Returns up to a maximum of the last 10000 transactions only.
    * @param {string} address Contract address
-   * @param {string|number} startBlock Starting block number to retrieve results
-   * @param {string|number} endBlock Ending block number to retrieve results
-   * @param {string|number} offset Max records to return
-   * @param {string|number} page Page number
-   * @param {"asc"|"desc"} sort Sort type
+   * @param {object} [options]
+   * @param {string|number} [options.startBlock] Starting block number to
+   * retrieve results
+   * @param {string|number} [options.endBlock] Ending block number to
+   * retrieve results
+   * @param {string|number} [options.offset] Max records to return
+   * @param {string|number} [options.page] Page number
+   * @param {"asc"|"desc"} [options.sort] Sort type
    * @returns {Promise<object[]>}
    */
-  getInternalTransactions(address, startBlock, endBlock, offset, page, sort) {
+  getInternalTransactions(address, options = {}) {
+    const { startBlock, endBlock, offset, page, sort } = options
+
     return this._createRequest({
       module:     MODULES.ACCOUNT,
       action:     ACTIONS.GET_TRANSACTIONS_LIST_INTERNAL,
       address,
-      endblock:   endBlock,
       startblock: startBlock,
-      offset,
-      page,
-      sort
+      endblock:   endBlock,
+      offset:     offset,
+      page:       page,
+      sort:       sort
     })
   }
 
@@ -148,13 +168,16 @@ class EtherscanApi {
   /**
    * List of blocks mined by address
    * @param {string} address Miner address
-   * @param {"blocks"|"uncles"} type Type of block: blocks (full blocks only)
-   * or uncles (uncle blocks only)
-   * @param {number} offset Max records to return
-   * @param {number} page Page number
+   * @param {object} [options]
+   * @param {"blocks"|"uncles"} [options.type] Type of block:
+   * blocks (full blocks only) or uncles (uncle blocks only)
+   * @param {number} [options.offset] Max records to return
+   * @param {number} [options.page] Page number
    * @returns {Promise<object[]>}
    */
-  getMinedBlocks(address, type = 'blocks', offset, page) {
+  getMinedBlocks(address, options = {}) {
+    const { type = 'blocks', offset, page } = options
+
     return this._createRequest({
       module:    MODULES.ACCOUNT,
       action:    ACTIONS.GET_MINED_BLOCKS,
@@ -225,36 +248,42 @@ class EtherscanApi {
   /**
    * Returns events logs.
    * The Event Log API was designed to provide an alternative to the native
-   * eth_getLogs. Topic Operator (opr) choices are either 'and' or 'or' and
-   * are restricted to the above choices only. For performance and security
+   * eth_getLogs. Topic Operator choices are either 'and' or 'or' and are
+   * restricted to the above choices only. For performance and security
    * considerations, only the first 1000 results are return.
    * @param {string} address
-   * @param {number} fromBlock Start block number (integer, NOT hex)
-   * @param {number|'latest'} toBlock End block number or "latest"
+   * @param {object} options
+   * @param {number} options.fromBlock Start block number (integer, NOT hex)
+   * @param {number|'latest'} options.toBlock End block number or "latest"
    * (earliest and pending is NOT supported yet)
-   * @param {string} topic0 Topic 0
-   * @param {"and"|"or"} [topic01operator] Operator between topic0 & topic1
-   * @param {string} [topic1] Topic 1
-   * @param {"and"|"or"} [topic12operator] Operator between topic1 & topic2
-   * @param {string} [topic2] Topic 2
-   * @param {"and"|"or"} [topic23operator] Operator between topic2 & topic3
-   * @param {string} [topic3] Topic 3
-   * @param {"and"|"or"} [topic02operator] Operator between topic0 & topic2
+   * @param {string} options.topic0 Topic 0
+   * @param {"and"|"or"} [options.topic01operator] Operator between topic0 &
+   * topic1
+   * @param {string} [options.topic1] Topic 1
+   * @param {"and"|"or"} [options.topic12operator] Operator between topic1 &
+   * topic2
+   * @param {string} [options.topic2] Topic 2
+   * @param {"and"|"or"} [options.topic23operator] Operator between topic2 &
+   * topic3
+   * @param {string} [options.topic3] Topic 3
+   * @param {"and"|"or"} [options.topic02operator] Operator between topic0 &
+   * topic2
    * @return {Promise<object>}
    */
-  getEventsLogs(
-    address,
-    fromBlock,
-    toBlock,
-    topic0,
-    topic01operator,
-    topic1,
-    topic12operator,
-    topic2,
-    topic23operator,
-    topic3,
-    topic02operator
-  ) {
+  getEventsLogs(address, options = {}) {
+    const {
+      fromBlock,
+      toBlock,
+      topic0,
+      topic01operator,
+      topic1,
+      topic12operator,
+      topic2,
+      topic23operator,
+      topic3,
+      topic02operator
+    } = options
+
     return this._createRequest({
       module:       MODULES.LOGS,
       action:       ACTIONS.GET_LOGS,
@@ -361,9 +390,13 @@ class EtherscanApi {
   /**
    * Returns the number of transactions sent from an address
    * @param {string} address Transaction address
+   * @param {object} [options]
+   * @param {string} [options.tag=latest]
    * @returns {Promise<number>}
    */
-  getTransactionCount(address, tag = 'latest') {
+  getTransactionCount(address, options = {}) {
+    const { tag = 'latest' } = options
+
     return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_TRANSACTION_COUNT,
@@ -406,9 +439,13 @@ class EtherscanApi {
    * the block chain
    * @param {string} to Address to execute from
    * @param {string} data Data to transfer
+   * @param {object} [options]
+   * @param {string} [options.tag=latest]
    * @returns {Promise<string>}
    */
-  call(to, data, tag = 'latest') {
+  call(to, data, options = {}) {
+    const { tag = 'latest' } = options
+
     return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.CALL,
@@ -421,9 +458,13 @@ class EtherscanApi {
   /**
    * Returns code at a given address
    * @param {string} address
+   * @param {object} [options]
+   * @param {string} [options.tag=latest]
    * @returns {Promise<string>}
    */
-  getCode(address, tag = 'latest') {
+  getCode(address, options = {}) {
+    const { tag = 'latest' } = options
+
     return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_CODE,
@@ -436,9 +477,13 @@ class EtherscanApi {
    * Returns the value from a storage position at a given address.
    * @param {string} address
    * @param {number} position
+   * @param {object} options
+   * @param {string} [options.tag=latest]
    * @returns {Promise<string>}
    */
-  getStorageAt(address, position, tag = 'latest') {
+  getStorageAt(address, position, options = {}) {
+    const { tag = 'latest' } = options
+
     return this._createRequest({
       module:   MODULES.PROXY,
       action:   ACTIONS.GET_STORAGE_AT,
@@ -450,10 +495,13 @@ class EtherscanApi {
 
   /**
    * Returns the current price per gas (in wei by default)
-   * @param {string} [unit=wei] Unit of gas
+   * @param {object} [options]
+   * @param {string} [options.unit=wei] Unit of gas
    * @returns {Promise<string>}
    */
-  getGasPrice(unit = 'wei') {
+  getGasPrice(options = {}) {
+    const { unit = 'wei' } = options
+
     return this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.GET_GAS_PRICE
@@ -474,13 +522,14 @@ class EtherscanApi {
   /**
    * Makes a call or transaction, which won't be added to the blockchain and
    * returns the used gas, which can be used for estimating the used gas
-   * @param {string} to Address to get code from
-   * @param {string} value Storage position
-   * @param {string} gasPrice Gas price in wei
-   * @param {string} gas
+   * @param {string} toAddress Address to get code from
+   * @param {object} options
+   * @param {string} options.value Storage position
+   * @param {string} options.gasPrice Gas price in wei
+   * @param {string} options.gas
    * @return {Promise<void>}
    */
-  estimateGas(to, value, gasPrice, gas) {
+  estimateGas(toAddress, { value, gasPrice, gas }) {
     this._createRequest({
       module: MODULES.PROXY,
       action: ACTIONS.ESTIMATE_GAS,
@@ -507,9 +556,14 @@ class EtherscanApi {
   /**
    * Returns ERC20-Token account balance by token's contract address
    * @param {string} contractAddress
+   * @param {string} address
+   * @param {object} [options]
+   * @param {object} [options.tag=latest]
    * @returns {Promise<string>}
    */
-  getTokenBalanceByContractAddress(contractAddress, address, tag = 'latest') {
+  getTokenBalanceByContractAddress(contractAddress, address, options = {}) {
+    const { tag = 'latest' } = options
+
     return this._createRequest({
       module:          MODULES.ACCOUNT,
       action:          ACTIONS.GET_TOKEN_BALANCE_BY_CONTRACT,

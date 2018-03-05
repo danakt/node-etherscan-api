@@ -26,14 +26,13 @@ describe('Etherscan accounts methods', () => {
 
   test('getTransactions', () => {
     return e
-      .getTransactions(
-        '0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a',
-        0,
-        9999999,
-        3,
-        3,
-        'asc'
-      )
+      .getTransactions('0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a', {
+        startBlock: 0,
+        endBlock:   9999999,
+        offset:     3,
+        page:       3,
+        sort:       'asc'
+      })
       .then(data => {
         expect(data.length).toBe(3)
         expect(Object.keys(data[0])).toEqual([
@@ -61,14 +60,13 @@ describe('Etherscan accounts methods', () => {
 
   test('getInternalTransactions', () => {
     return e
-      .getInternalTransactions(
-        '0x2c1ba59d6f58433fb1eaee7d20b26ed83bda51a3',
-        0,
-        2702578,
-        3,
-        3,
-        'asc'
-      )
+      .getInternalTransactions('0x2c1ba59d6f58433fb1eaee7d20b26ed83bda51a3', {
+        startBlock: 0,
+        endBlock:   2702578,
+        offset:     3,
+        page:       3,
+        sort:       'asc'
+      })
       .then(data => {
         expect(data.length).toBe(3)
         expect(Object.keys(data[0])).toEqual([
@@ -115,14 +113,13 @@ describe('Etherscan accounts methods', () => {
 
   test('getMinedBlocks', () => {
     return e
-      .getMinedBlocks(
-        '0x9dd134d14d1e65f84b706d6f205cd5b1cd03a46b',
-        'blocks',
-        10,
-        1
-      )
+      .getMinedBlocks('0x9dd134d14d1e65f84b706d6f205cd5b1cd03a46b', {
+        type:   'blocks',
+        offset: 10,
+        page:   1
+      })
       .then(data => {
-        expect(data.length).toBe(10)
+        expect(data.length).toEqual(10)
         expect(Object.keys(data[0])).toEqual([
           'blockNumber',
           'timeStamp',

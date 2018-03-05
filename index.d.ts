@@ -267,26 +267,36 @@ declare class EtherscanApi {
   /**
    * Returns Ether balance for a single address
    * @param {string} address Address
-   * @param {string} [unit=wei] Balance unit
+   * @param {object} [options]
+   * @param {string} [options.unit=wei] Balance unit
+   * @param {string} [options.tag=latest]
    * @returns {Promise<string>}
+   * @todo Write test for options
    */
   getAccountBalance(
     address: string,
-    unit?: keyof UNITS,
-    tag?: string
+    options?: {
+      unit?: keyof UNITS
+      tag?: string
+    }
   ): Promise<string>
 
   /**
    * Returns Ether balance for multiple addresses in a single call.
    * Up to a maximum of 20 accounts in a single batch.
    * @param {Array<string>} addresses List of addresses
-   * @param {string} [unit=wei] Balance unit
-   * @returns {Promise<object>}
+   * @param {object} [options]
+   * @param {string} [options.unit=wei] Balance unit
+   * @param {string} [options.tag=latest]
+   * @return {Promise<object>}
+   * @todo Write test for options
    */
   getAccountBalances(
     addresses: string[],
-    unit?: keyof UNITS,
-    tag?: string
+    options?: {
+      unit?: keyof UNITS
+      tag?: string
+    }
   ): Promise<
     {
       account: string
@@ -295,43 +305,53 @@ declare class EtherscanApi {
   >
 
   /**
-   * Get a list of 'Normal' transactions by address
-   * Returns up to a maximum of the last 10000 transactions only
+   * Returns a list of 'Normal' transactions by address.
+   * Returns up to a maximum of the last 10000 transactions only.
    * @param {string} address Contract address
-   * @param {string|number} startBlock Starting block number to retrieve results
-   * @param {string|number} endBlock Ending block number to retrieve results
-   * @param {number} offset Max records to return
-   * @param {number} page Page number
-   * @param {"asc"|"desc"} sort Sort type
+   * @param {object} [options]
+   * @param {object} [options.startBlock] Starting block number to retrieve
+   * results
+   * @param {string|number} [options.endBlock] Ending block number to retrieve
+   * results
+   * @param {number} [options.offset] Max records to return
+   * @param {number} [options.page] Page number
+   * @param {"asc"|"desc"} [options.sort] Sort type
    * @returns {Promise<object[]>}
    */
   getTransactions(
     address: string,
-    startBlock?: number,
-    endBlock?: number,
-    offset?: number,
-    page?: number,
-    sort?: 'asc' | 'desc'
+    options?: {
+      startBlock?: number
+      endBlock?: number
+      offset?: number
+      page?: number
+      sort?: 'asc' | 'desc'
+    }
   ): Promise<TransactionDescription[]>
 
   /**
-   * Returns a list of 'Internal' Transactions by Address
-   * Returns up to a maximum of the last 10000 transactions only
+   * Returns a list of 'Internal' Transactions by Address.
+   * Returns up to a maximum of the last 10000 transactions only.
    * @param {string} address Contract address
-   * @param {string|number} startBlock Starting block number to retrieve results
-   * @param {string|number} endBlock Ending block number to retrieve results
-   * @param {string|number} offset Max records to return
-   * @param {string|number} page Page number
-   * @param {"asc"|"desc"} sort Sort type
+   * @param {object} [options]
+   * @param {string|number} [options.startBlock] Starting block number to
+   * retrieve results
+   * @param {string|number} [options.endBlock] Ending block number to
+   * retrieve results
+   * @param {string|number} [options.offset] Max records to return
+   * @param {string|number} [options.page] Page number
+   * @param {"asc"|"desc"} [options.sort] Sort type
    * @returns {Promise<object[]>}
    */
   getInternalTransactions(
     address: string,
-    startBlock?: number,
-    endBlock?: number,
-    offset?: number,
-    page?: number,
-    sort?: 'asc' | 'desc'
+    options?: {
+      startBlock?: number
+      endBlock?: number
+      offset?: number
+      page?: number
+      sort?: 'asc' | 'desc'
+    }
   ): Promise<InternalTransactionDescription[]>
 
   /**
@@ -346,17 +366,20 @@ declare class EtherscanApi {
   /**
    * List of blocks mined by address
    * @param {string} address Miner address
-   * @param {"blocks"|"uncles"} type Type of block: blocks (full blocks only)
-   * or uncles (uncle blocks only)
-   * @param {number} offset Max records to return
-   * @param {number} page Page number
+   * @param {object} [options]
+   * @param {"blocks"|"uncles"} [options.type] Type of block:
+   * blocks (full blocks only) or uncles (uncle blocks only)
+   * @param {number} [options.offset] Max records to return
+   * @param {number} [options.page] Page number
    * @returns {Promise<object[]>}
    */
   getMinedBlocks(
     address: string,
-    type?: 'blocks' | 'uncles',
-    offset?: number,
-    page?: number
+    options?: {
+      type?: 'blocks' | 'uncles'
+      offset?: number
+      page?: number
+    }
   ): Promise<BlockInfo[]>
 
   /**
@@ -402,35 +425,42 @@ declare class EtherscanApi {
   /**
    * Returns events logs.
    * The Event Log API was designed to provide an alternative to the native
-   * eth_getLogs. Topic Operator (opr) choices are either 'and' or 'or' and
-   * are restricted to the above choices only. For performance and security
+   * eth_getLogs. Topic Operator choices are either 'and' or 'or' and are
+   * restricted to the above choices only. For performance and security
    * considerations, only the first 1000 results are return.
    * @param {string} address
-   * @param {number} fromBlock Start block number (integer, NOT hex)
-   * @param {number|'latest'} toBlock End block number or "latest"
+   * @param {object} options
+   * @param {number} options.fromBlock Start block number (integer, NOT hex)
+   * @param {number|'latest'} options.toBlock End block number or "latest"
    * (earliest and pending is NOT supported yet)
-   * @param {string} topic0 Topic 0
-   * @param {"and"|"or"} [topic01operator] Operator between topic0 & topic1
-   * @param {string} [topic1] Topic 1
-   * @param {"and"|"or"} [topic12operator] Operator between topic1 & topic2
-   * @param {string} [topic2] Topic 2
-   * @param {"and"|"or"} [topic23operator] Operator between topic2 & topic3
-   * @param {string} [topic3] Topic 3
-   * @param {"and"|"or"} [topic02operator] Operator between topic0 & topic2
+   * @param {string} options.topic0 Topic 0
+   * @param {"and"|"or"} [options.topic01operator] Operator between topic0 &
+   * topic1
+   * @param {string} [options.topic1] Topic 1
+   * @param {"and"|"or"} [options.topic12operator] Operator between topic1 &
+   * topic2
+   * @param {string} [options.topic2] Topic 2
+   * @param {"and"|"or"} [options.topic23operator] Operator between topic2 &
+   * topic3
+   * @param {string} [options.topic3] Topic 3
+   * @param {"and"|"or"} [options.topic02operator] Operator between topic0 &
+   * topic2
    * @return {Promise<object>}
    */
   getEventsLogs(
     address: string,
-    fromBlock: number,
-    toBlock: number | 'latest',
-    topic0?: string,
-    topic01operator?: 'and' | 'or',
-    topic1?: string,
-    topic12operator?: 'and' | 'or',
-    topic2?: string,
-    topic23operator?: 'and' | 'or',
-    topic3?: string,
-    topic02operator?: 'and' | 'or'
+    options: {
+      fromBlock: number
+      toBlock: number | 'latest'
+      topic0?: string
+      topic01operator?: 'and' | 'or'
+      topic1?: string
+      topic12operator?: 'and' | 'or'
+      topic2?: string
+      topic23operator?: 'and' | 'or'
+      topic3?: string
+      topic02operator?: 'and' | 'or'
+    }
   ): Promise<EventDescription[]>
 
   /**
@@ -487,9 +517,14 @@ declare class EtherscanApi {
   /**
    * Returns the number of transactions sent from an address
    * @param {string} address Transaction address
+   * @param {object} [options]
+   * @param {string} [options.tag=latest]
    * @returns {Promise<number>}
    */
-  getTransactionCount(address: string, tag?: string): Promise<number>
+  getTransactionCount(
+    address: string,
+    options?: { tag?: string }
+  ): Promise<number>
 
   /**
    * Creates new message call transaction or a contract creation for signed
@@ -510,46 +545,60 @@ declare class EtherscanApi {
    * the block chain
    * @param {string} to Address to execute from
    * @param {string} data Data to transfer
+   * @param {object} [options]
+   * @param {string} [options.tag=latest]
    * @returns {Promise<string>}
    */
-  call(to: string, data: string, tag?: string): Promise<string>
+  call(to: string, data: string, options?: { tag?: string }): Promise<string>
 
   /**
    * Returns code at a given address
    * @param {string} address
+   * @param {object} [options]
+   * @param {string} [options.tag=latest]
    * @returns {Promise<string>}
    */
-  getCode(address: string, tag?: string): Promise<string>
+  getCode(address: string, options?: { tag?: string }): Promise<string>
 
   /**
    * Returns the value from a storage position at a given address.
    * @param {string} address
    * @param {number} position
+   * @param {object} [options]
+   * @param {string} [options.tag=latest]
    * @returns {Promise<string>}
    */
-  getStorageAt(address: string, position: number, tag?: string): Promise<string>
+  getStorageAt(
+    address: string,
+    position: number,
+    options?: { tag?: string }
+  ): Promise<string>
 
   /**
    * Returns the current price per gas (in wei by default)
-   * @param {string} [unit=wei] Unit of gas
+   * @param {object} [options]
+   * @param {string} [options.unit=wei] Unit of gas
    * @returns {Promise<string>}
    */
-  getGasPrice(unit?: keyof UNITS): Promise<string>
+  getGasPrice(options?: { unit?: keyof UNITS }): Promise<string>
 
   /**
    * Makes a call or transaction, which won't be added to the blockchain and
    * returns the used gas, which can be used for estimating the used gas
-   * @param {string} to Address to get code from
-   * @param {string} value Storage position
-   * @param {string} gasPrice Gas price in wei
-   * @param {string} gas
-   * @returns {Promise<void>}
+   * @param {string} toAddress Address to get code from
+   * @param {object} options
+   * @param {string} options.value Storage position
+   * @param {string} options.gasPrice Gas price in wei
+   * @param {string} options.gas
+   * @return {Promise<void>}
    */
   estimateGas(
-    to: string,
-    value: string | number,
-    gasPrice: string,
-    gas: string
+    toAddress: string,
+    options: {
+      value: string | number
+      gasPrice: string
+      gas: string
+    }
   ): Promise<void>
 
   /**
@@ -562,12 +611,17 @@ declare class EtherscanApi {
   /**
    * Returns ERC20-Token account balance by token's contract address
    * @param {string} contractAddress
+   * @param {string} address
+   * @param {object} [options]
+   * @param {object} [options.tag=latest]
    * @returns {Promise<string>}
    */
   getTokenBalanceByContractAddress(
     contractAddress: string,
-    address: string,
-    tag?: string
+    options?: {
+      address: string
+      tag?: string
+    }
   ): Promise<string>
 
   /**
