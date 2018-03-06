@@ -36,6 +36,10 @@ etherscan
     // Working with the balance here
     console.log(balance)
   })
+  .catch(err => {
+    // Handle error here
+    console.error(err)
+  })
 ```
 
 ## License
