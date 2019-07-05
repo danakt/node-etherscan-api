@@ -6,12 +6,13 @@
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watchAll --coverage",
-    "doc":
-      "jsdoc2md --files src/index.js --template docs/template.hbs > docs/API.md"
+    "doc": "jsdoc2md --files src/index.js --template docs/template.hbs > docs/API.md"
   },
   "types": "index.d.ts",
   "jest": {
-    "testMatch": ["<rootDir>/tests/**/*.js"]
+    "testMatch": [
+      "<rootDir>/tests/**/*.js"
+    ]
   },
   "keywords": [
     "ethereum",
@@ -34,7 +35,7 @@
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "jest": "^22.4.2",
+    "jest": "^24.8.0",
     "jsdoc-to-markdown": "^3.0.3"
   },
   "dependencies": {
