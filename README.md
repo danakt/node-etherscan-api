@@ -1,4 +1,4 @@
-# Node.js Etherscan API
+README. md#Node.js Etherscan API
 
 [![npm](https://img.shields.io/npm/v/node-etherscan-api.svg?style=flat-square)](https://www.npmjs.com/package/node-etherscan-api)
 [![Travis branch](https://img.shields.io/travis/danakt/node-etherscan-api/master.svg?style=flat-square)](https://travis-ci.org/danakt/node-etherscan-api)
