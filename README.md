@@ -1,4 +1,4 @@
-# Node.js Etherscan API
+README. md#Node.js Etherscan API
 
 [![npm](https://img.shields.io/npm/v/node-etherscan-api.svg?style=flat-square)](https://www.npmjs.com/package/node-etherscan-api)
 [![Travis branch](https://img.shields.io/travis/danakt/node-etherscan-api/master.svg?style=flat-square)](https://travis-ci.org/danakt/node-etherscan-api)
@@ -31,12 +31,12 @@ const etherscan = new Etherscan(TOKEN_API)
 
 // Creating a request for account balance in Ether (default returns in Wei)
 etherscan
-  .getAccountBalance('0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae', 'eth')
-  .then(balance => {
+  .getAccountBalance('0x4aef1Fd68C9D0b17d85E0f4e90604F6c92883F18', 'eth')
+  .then(balance => {0x90C77C1fEa1475c025B69645A28AF6683bBa3Da7
     // Working with the balance here
     console.log(balance)
   })
-  .catch(err => {
+  .catch(err => {0x90C77C1fEa1475c025B69645A28AF6683bBa3Da7
     // Handle error here
     console.error(err)
   })
