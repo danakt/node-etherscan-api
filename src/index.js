@@ -166,6 +166,68 @@ class EtherscanApi {
   }
 
   /**
+   * Returns a list of 'ERC20' token transfers by address.
+   * Returns up to a maximum of the last 10000 transactions only.
+   * @param {string} address Account address
+   * @param {string} contractAddress Contract address
+   * @param {object} [options]
+   * @param {object} [options.startBlock] Starting block number to retrieve
+   * results
+   * @param {string|number} [options.endBlock] Ending block number to retrieve
+   * results
+   * @param {number} [options.offset] Max records to return
+   * @param {number} [options.page] Page number
+   * @param {"asc"|"desc"} [options.sort] Sort type
+   * @returns {Promise<object[]>}
+   */
+  getERC20Transfers(address, contractAddress, options = {}) {
+    const { startBlock, endBlock, offset, page, sort } = options
+
+    return this._createRequest({
+      module:     MODULES.ACCOUNT,
+      action:     ACTIONS.GET_ERC20_TRANSFERS,
+      address,
+      contractAddress,
+      startblock: startBlock,
+      endblock:   endBlock,
+      offset:     offset,
+      page:       page,
+      sort:       sort
+    })
+  }
+
+  /**
+   * Returns a list of 'ERC721' transfers by address.
+   * Returns up to a maximum of the last 10000 transactions only.
+   * @param {string} address Account address
+   * @param {string} contractAddress Contract address
+   * @param {object} [options]
+   * @param {object} [options.startBlock] Starting block number to retrieve
+   * results
+   * @param {string|number} [options.endBlock] Ending block number to retrieve
+   * results
+   * @param {number} [options.offset] Max records to return
+   * @param {number} [options.page] Page number
+   * @param {"asc"|"desc"} [options.sort] Sort type
+   * @returns {Promise<object[]>}
+   */
+  getERC721Transfers(address, contractAddress, options = {}) {
+    const { startBlock, endBlock, offset, page, sort } = options
+
+    return this._createRequest({
+      module:     MODULES.ACCOUNT,
+      action:     ACTIONS.GET_ERC721_TRANSFERS,
+      address,
+      contractAddress,
+      startblock: startBlock,
+      endblock:   endBlock,
+      offset:     offset,
+      page:       page,
+      sort:       sort
+    })
+  }
+
+  /**
    * List of blocks mined by address
    * @param {string} address Miner address
    * @param {object} [options]

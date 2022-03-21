@@ -3,6 +3,8 @@ module.exports = {
   GET_BALANCE_MULTI:                'balancemulti',
   GET_TRANSACTIONS_LIST:            'txlist',
   GET_TRANSACTIONS_LIST_INTERNAL:   'txlistinternal',
+  GET_ERC20_TRANSFERS:              'tokentx',
+  GET_ERC721_TRANSFERS:             'tokennfttx',
   GET_MINED_BLOCKS:                 'getminedblocks',
   GET_ABI:                          'getabi',
   GET_CONTRACT_STATUS:              'getstatus',

@@ -226,6 +226,33 @@ type InternalTransactionDescription = {
 }
 
 /**
+ * Token transfer info
+ */
+type TokenTransferDescription = {
+  blockHash: string
+  blockNumber: string
+  confirmations?: string
+  contractAddress?: string
+  cumulativeGasUsed?: string
+  from: string
+  gas: string
+  gasPrice: string
+  gasUsed: string
+  hash: string
+  input: string
+  isError?: string
+  nonce: string
+  timeStamp?: string
+  to: string
+  transactionIndex: string
+  value: string
+  tokenID?: string
+  tokenName: string
+  tokenSymbol: string
+  tokenDecimal: string
+}
+
+/**
  * Type of transaction receipt
  */
 type TransactionReceipt = {
@@ -353,6 +380,60 @@ declare class EtherscanApi {
       sort?: 'asc' | 'desc'
     }
   ): Promise<InternalTransactionDescription[]>
+
+  /**
+   * Returns a list of 'ERC20' token transfers by address.
+   * Returns up to a maximum of the last 10000 transactions only.
+   * @param {string} address Account address
+   * @param {string} contractAddress Contract address
+   * @param {object} [options]
+   * @param {object} [options.startBlock] Starting block number to retrieve
+   * results
+   * @param {string|number} [options.endBlock] Ending block number to retrieve
+   * results
+   * @param {number} [options.offset] Max records to return
+   * @param {number} [options.page] Page number
+   * @param {"asc"|"desc"} [options.sort] Sort type
+   * @returns {Promise<object[]>}
+   */
+  getERC20Transfers(
+    address: string,
+    contractAddress: string,
+    options?: {
+      startBlock?: number
+      endBlock?: number
+      offset?: number
+      page?: number
+      sort?: 'asc' | 'desc'
+    }
+  ): Promise<TokenTransferDescription[]>
+
+  /**
+   * Returns a list of 'ERC721' transfers by address.
+   * Returns up to a maximum of the last 10000 transactions only.
+   * @param {string} address Account address
+   * @param {string} contractAddress Contract address
+   * @param {object} [options]
+   * @param {object} [options.startBlock] Starting block number to retrieve
+   * results
+   * @param {string|number} [options.endBlock] Ending block number to retrieve
+   * results
+   * @param {number} [options.offset] Max records to return
+   * @param {number} [options.page] Page number
+   * @param {"asc"|"desc"} [options.sort] Sort type
+   * @returns {Promise<object[]>}
+   */
+  getERC721Transfers(
+    address: string,
+    contractAddress: string,
+    options?: {
+      startBlock?: number
+      endBlock?: number
+      offset?: number
+      page?: number
+      sort?: 'asc' | 'desc'
+    }
+  ): Promise<TokenTransferDescription[]>
 
   /**
    * Returns a list of 'Internal' Transactions by Address
